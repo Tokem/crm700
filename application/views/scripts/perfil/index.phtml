@@ -1,0 +1,298 @@
+<?php
+$auth = Zend_Auth::getInstance();
+    $identity = $auth->getIdentity();
+?>
+
+<!doctype html>
+<html class="no-js" lang="pt_br">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="...">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- Icons -->
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="<?php echo $this->baseUrl()?>/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl()?>/assets/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl()?>/assets/css/jquery-ui.min.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl()?>/assets/css/select2.min.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl()?>/assets/font-awesome-4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl()?>/assets/css/fontello.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl()?>/assets/css/chartist.min.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl()?>/assets/css/app.min.css">
+    
+    <!-- Modernizr -->
+    <script src="<?php echo $this->baseUrl()?>/assets/js/modernizr-2.8.3.min.js"></script>
+    <?php echo $this->headLink()?>
+    <!-- Google fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700' rel='stylesheet' type='text/css'>
+</head>
+<body>
+    <!--[if lt IE 8]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <!-- Header -->
+    <header id="header">
+        <h1 class="logo">
+            <a href="#" title="#" class="js-nav-toggler">
+                <i class="icon icon-close"></i>
+            </a>
+            <a href="#" title="#">700<span>Gauss</span></a>
+        </h1>
+
+        <div class="pageContent">
+            <div class="container">
+                <ul class="topNavigation">
+                    <li>
+                        <div class="btn-group simpleList simpleListLighten messages">
+                            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="zmdi zmdi-email zmdi-hc-fw icon"></i>
+                                <span class="badge">6</span>
+                            </button>
+                            
+                            <ul class="dropdown-menu pull-right">
+                                <li>
+                                    <a href="#" title="#" class="clearfix">
+                                        <img src="tmp/44x44-3.jpg" alt="#" width="44" height="44" class="pull-left">
+                                        <span class="pull-left">
+                                            <strong class="text-gray">John Doe</strong><br />
+                                            <span class="text-gray">Proin vel sapien at risus...</span>
+                                        </span>
+                                        <span class="pull-right">22 sec. ago</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" title="#" class="clearfix">
+                                        <img src="tmp/44x44-1.jpg" alt="#" width="44" height="44" class="pull-left">
+                                        <span class="pull-left">
+                                            <strong class="text-gray">Jane Doe</strong><br />
+                                            <span class="text-gray">Aliquam non accumsan...</span>
+                                        </span>
+                                        <span class="pull-right">19 min. ago</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" title="#" class="clearfix">
+                                        <img src="tmp/44x44-4.jpg" alt="#" width="44" height="44" class="pull-left">
+                                        <span class="pull-left">
+                                            <strong class="text-gray">Nick Doe</strong><br />
+                                            <span class="text-gray">Praesent non hendrerit...</span>
+                                        </span>
+                                        <span class="pull-right">1 hour ago</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" title="#" class="clearfix">
+                                        <img src="tmp/44x44-5.jpg" alt="#" width="44" height="44" class="pull-left">
+                                        <span class="pull-left">
+                                            <strong class="text-gray">Andrew Doe</strong><br />
+                                            <span class="text-gray">Aliquam ligula ante magna...</span>
+                                        </span>
+                                        <span class="pull-right">21.09.2015</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" title="#" class="clearfix text-center">
+                                        <i class="zmdi zmdi-plus-square icon"></i> <strong class="text-gray">See all</strong>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="btn-group simpleList list-sm">
+                            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="zmdi zmdi-bookmark zmdi-hc-fw icon"></i>
+                                <span class="badge">98</span>
+                            </button>
+
+                            <ul class="dropdown-menu pull-right">
+                                <li>
+                                    <a href="#" title="#" class="clearfix">
+                                        <span class="pull-left"><i class="zmdi zmdi-accounts-add zmdi-hc-fw icon"></i> Followers</span>
+                                        <span class="pull-right info">109,073</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" title="#" class="clearfix">
+                                        <span class="pull-left"><i class="zmdi zmdi-accounts-list-alt zmdi-hc-fw icon"></i> Subscribers</span>
+                                        <span class="pull-right info">26,114</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" title="#" class="clearfix">
+                                        <span class="pull-left"><i class="zmdi zmdi-assignment-o zmdi-hc-fw icon"></i> Products sold</span>
+                                        <span class="pull-right info">1,557,669</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" title="#" class="clearfix">
+                                        <span class="pull-left"><i class="zmdi zmdi-bookmark zmdi-hc-fw icon"></i> Awards</span>
+                                        <span class="pull-right info">14</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" title="#" class="clearfix">
+                                        <span class="pull-left"><i class="zmdi zmdi-cloud-done zmdi-hc-fw icon"></i> Projects</span>
+                                        <span class="pull-right info">229</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" title="#" class="clearfix text-center">
+                                        <i class="zmdi zmdi-plus-square icon"></i> See all
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#" title="#">
+                            <i class="zmdi zmdi-settings zmdi-hc-fw icon"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" title="#" data-toggle="modal" data-target="#searchModal">
+                            <i class="zmdi zmdi-search zmdi-hc-fw icon"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    
+    <aside class="aside">
+        <!-- User profile -->
+        <div class="asideUserProfile">
+            <a href="user-profile.html" title="#" class="c">
+                <img src="tmp/perfil-210-210.jpg" alt="#" class="img-responsive">
+                <span class="name hidden-xs hidden-sm">Usuário<br /> CRM 700 gauss</span>
+            </a>
+        </div>
+
+        <!-- menu -->
+        <?php include'../application/layouts/scripts/menu.phtml';?>
+    </aside>
+
+    <!-- Page Wrap -->
+    <div class="pageWrap">
+
+        <!-- Page content -->
+        <div class="pageContent extended">
+            <div class="container">
+
+                <!-- Task Cards -->
+                <h1 class="pageTitle">
+                    <a href="#" title="#">Meu Perfil</a>
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="dashboard.html">Home</a></li>
+                    <li class="active">Meu Perfil</li>
+                </ol>
+                
+                <!-- Painel -->
+                <div class="row">
+                    <div class="col-xs-12 col-md-4 col-lg-3">
+                        <div class="userProfileInfo">
+                            <div class="image">
+                                <img src="tmp/perfil.jpg" alt="#" class="img-responsive">
+                                <a href="#" title="#" class="editImage">
+                                    <i class="fa fa-camera"></i>
+                                </a>
+                            </div>
+
+                            <div class="box">
+                                <div class="name"><strong>Usuário cadastrado</strong></div>
+                                <div class="info">
+                                    <span><i class="fa fa-fw fa-clock-o"></i> <a href="tel:+4210555888777" title="#">(83) 98821-1615</a></span>
+                                    <span><i class="fa fa-fw fa-list-alt"></i> <a href="#" title="#">email@exemplo.com</a></span>
+                                    <span><i class="fa fa-fw fa-usd"></i> Av. Assis Chateaubriand<br />Campia Grande - PB</span>
+                                </div>
+                                <div class="socialIcons clearfix">
+                                    <a href="#" title="#" class="fb">
+                                        <i class="fa fa-facebook"></i>
+                                    </a>
+                                    <a href="#" title="#" class="twitter">
+                                        <i class="fa fa-twitter"></i>
+                                    </a>
+                                    <a href="#" title="#" class="google-plus">
+                                        <i class="fa fa-google-plus"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-md-8 col-lg-9">
+                        <div class="box">
+                            <h2 class="boxTitle">Painel</h2>
+
+                            <!-- Tabs -->
+                            <ul class="nav nav-tabs userProfileTabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#tab-item-1" aria-controls="tab-item-1" role="tab" data-toggle="tab">Meus dados</a></li>
+                                <li role="presentation"><a href="#tab-item-2" aria-controls="tab-item-2" role="tab" data-toggle="tab">Extratos</a></li>
+                            </ul>
+
+                            <div class="tab-content">
+
+                                <!-- About -->
+                                <div role="tabpanel" class="tab-pane fade in active" id="tab-item-1">
+                                    
+                                    <div class="userProfileContent">
+                                         <?php echo $this->form?>                                        
+                                    </div>
+                                </div>
+
+                                <!-- Activities -->
+                                <div role="tabpanel" class="tab-pane fade" id="tab-item-2">
+                                    <div class="userActivities">
+                                       
+                                    </div>
+                                </div>
+
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end perfil -->
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Search modal -->
+    <div class="modal fade in" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form>
+                        <input type="text" class="form-control" placeholder="Type search term...">
+                        <button type="submit" class="btn">Go</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS -->
+    <script src="<?php echo $this->baseUrl()?>/assets/js/jquery-1.11.3.min.js"></script>
+    <script src="<?php echo $this->baseUrl()?>/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="<?php echo $this->baseUrl()?>/assets/js/jquery-ui.min.js"></script>
+    <script src="<?php echo $this->baseUrl()?>/assets/js/select2.min.js"></script>
+    <script src="<?php echo $this->baseUrl()?>/assets/js/parsley.min.js"></script>
+    <script src="<?php echo $this->baseUrl()?>/assets/js/throttle-debounce.min.js"></script>
+    <script src="<?php echo $this->baseUrl()?>/assets/js/jquery.shuffle.min.js"></script>
+    <script src="<?php echo $this->baseUrl()?>/assets/js/autosize.min.js"></script>
+    <script src="<?php echo $this->baseUrl()?>/assets/js/raphael-min.js"></script>
+    <script src="<?php echo $this->baseUrl()?>/assets/js/morris.min.js"></script>
+    <script src="<?php echo $this->baseUrl()?>/assets/js/Chart.min.js"></script>
+    <script src="<?php echo $this->baseUrl()?>/assets/js/chartist.min.js"></script>
+    <script src="<?php echo $this->baseUrl()?>/assets/js/app.min.js"></script>
+    
+    <div class="visible-xs visible-sm extendedChecker"></div>
+</body>
+</html>

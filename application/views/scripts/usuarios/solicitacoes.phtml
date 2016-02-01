@@ -1,0 +1,80 @@
+<?php
+    $request = Zend_Controller_Front::getInstance()->getRequest();
+    $controller = $request->getControllerName();
+?>
+
+<?php $flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+<?php foreach ($flashMessenger->getMessages() as $msg): ?>
+    <?php echo $msg ?>
+<?php endforeach; ?>
+
+<a href="#" data-toggle="modal" data-target="#searchModal">
+<button type="button" class="btn bg-deep-purple"><i class="zmdi zmdi-search zmdi-hc-fw icon"></i> Pesquisar Usuário</button>
+</a>
+
+<!-- Table Striped -->
+<br/>
+<?php echo $this->paginator; ?>
+				<div class="box rte box-without-bottom-padding">
+					<h2 class="boxHeadline">Lista de Usuários</h2>
+					<h3 class="boxHeadlineSub">Usuário do sistema CRM 700 Gauss</h3>
+					<?php if(count($this->lista)>0):?>
+					<div class="tableWrap table-responsive">
+						<table class="table table-striped">
+							<thead>
+								 <tr>
+						            <th>#Código</th>
+						            <th>Nome</th>
+						            <th>Telefone</th>
+						            <th>Email</th>
+						            <th>Permissão</th>
+						            <th>Ativo</th>
+						            <th>Ação</th>
+						        </tr>
+							</thead>
+							<tbody>
+							
+
+								<?php foreach ($this->lista as $key => $value):?>
+								<tr>
+									<th scope="row"><?php echo $value->usr_id ?></th>
+						            <td><?php echo $value->usr_nome ?></td>
+						            <td><?php echo $value->usr_celular ?></td>
+						            <td><?php echo $value->usr_email ?></td>
+						            <td><?php echo $value->usr_permissao ?></td>
+						            <td>
+						            	<?php //echo $value->usr_ativo ?>
+										<input type="checkbox" codigo-usuario="<?php echo $value->usr_id?>" class="ativo" name="ativo" <?php echo $check = ($value->usr_ativo!=0) ? 'checked' : ''; ?>>
+						            </td>
+						            <td>
+						            	<a href="<?php echo $this->baseUrl()?>/usuarios/editar/id/<?php echo $value->usr_id?>" title="Editar usuário" class="text-light-gray"><i class="fa fa-pencil-square-o"></i></a>
+						            	<a  href="javascript:void(0);" title="Excluir usuário" controller="<?php echo $controller?>" id="<?php echo $value->usr_id ?>" class="remove_item text-light-gray"><i class="fa fa-trash-o"></i></a>
+						            </td>
+								</tr>
+								<?php endforeach; ?>
+							</tbody>
+						</table>
+					</div>
+					<?php else:?>
+					<div class="alert alert-warning alert-dismissible" role="alert">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+						<strong>Aviso!</strong> - Sem Resultados
+					</div>
+					<?php endif;?>
+				</div>
+				<?php echo $this->paginator; ?>
+
+
+				<!-- Search modal -->
+   <div class="modal fade in" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form action="<?php echo $this->baseUrl()?>/usuarios/resultado" enctype="application/x-www-form-urlencoded" method="post">
+                        <input type="text" id="nome_usuario" class="form-control" name="nome_usuario" placeholder="Digite o nome do Usuário...">
+                        <button type="submit" class="btn">Procurar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

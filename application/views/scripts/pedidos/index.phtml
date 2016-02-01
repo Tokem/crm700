@@ -1,0 +1,57 @@
+<a href="<?php echo $this->baseUrl()?>/pedidos/grade">
+<button type="button" class="btn bg-purple">+ Faça pedido</button>
+</a>
+
+<!-- Table Striped -->
+				<div class="box rte box-without-bottom-padding">
+					<h2 class="boxHeadline">Últimos Pedidos</h2>
+					<h3 class="boxHeadlineSub">lista geral de pedidos</h3>
+					
+					<div class="tableWrap table-responsive">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th># Nº do Pedido</th>
+									<th>Data</th>
+									<th>Valor Total</th>
+									<th>Status</th>
+									<th>Ações</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<th scope="row">2542</th>
+									<td>25/06/2015</td>
+									<td>R$200,00</td>
+									<td>Enviado para Produção</td>
+									<td><span class="text-green"><strong><a href="<?php echo $this->baseUrl()?>/pedidos/detalhes">Visualizar</a></strong></span></td>
+								</tr>
+
+								<tr>
+									<th scope="row">2543</th>
+									<td>31/07/2015</td>
+									<td>R$1.200,00</td>
+									<td>Em Produção</td>
+									<td><span class="text-green"><strong><a href="<?php echo $this->baseUrl()?>/pedidos/detalhes">Visualizar</a></strong></span></td>
+								</tr>
+
+								<tr>
+									<th scope="row">2544</th>
+									<td>31/07/2015</td>
+									<td>R$300,00</td>
+									<td>Enviado</td>
+									<td><span class="text-green"><strong><a href="<?php echo $this->baseUrl()?>/pedidos/detalhes">Visualizar</a></strong></span></td>
+								</tr>
+
+								<tr>
+									<th scope="row">2545</th>
+									<td>31/07/2015</td>
+									<td>R$500,00</td>
+									<td>Nota Fiscal emitida</td>
+									<td><span class="text-green"><strong><a href="<?php echo $this->baseUrl()?>/pedidos/detalhes">Visualizar</a></strong></span></td>
+								</tr>
+								
+							</tbody>
+						</table>
+					</div>
+				</div>

@@ -1,0 +1,81 @@
+<?php
+    $request = Zend_Controller_Front::getInstance()->getRequest();
+    $controller = $request->getControllerName();
+?>
+
+<style type="text/css">
+
+.errors{
+    display: none;
+}
+
+label.optional {
+    margin-left: 1%;
+}
+
+#pro_tamanhos-element label {
+        margin-left: 15px;
+}
+
+dd#pro_tamanhos-element {
+    font-size: 13px;
+    width: 636px;
+    margin-left: 1%;
+    margin-bottom: 2%;
+    border-style: solid;
+    border-color: #e6e7ed;
+    border-width: 1px;
+    display: inline-flex;
+    height: 56px;
+    margin-top: 5px;
+    padding: 12px;
+    border-left: 3px solid #4bae4f;
+}
+
+button#btn_enviar {
+    margin-top: 30%;
+}
+
+</style>
+
+
+<div class="row">
+	<button type="button" class="btn bg-blue-grey" onClick="JavaScript: window.history.back();"><i class="fa fa-mail-reply"></i> Voltar</button>
+		</br>
+        </br>
+        <?php
+
+		  $mensages = $this->form->getMessages();
+		  $this->validatorMensageProduct($mensages);
+		
+		?>
+		<br/>
+		<br/>
+
+<div class="imagens" style="max-width: 300px;">
+<table class="table">
+            <thead>
+                 <tr>
+                    <th>#Imagem</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php $count = 0?>
+                <?php foreach ($this->imagens as $key => $value):?>
+                <?php $count++?>
+                <tr>
+                    <th scope="row">                        
+                        <a href="javascript:void(0)" class="image_hover" rel="popover" data-content="<img style='max-width:200px;' src='<?php echo $this->baseUrl()?>/uploads/produtos/<?php echo $value->ima_nome?>'>" title="Imagem do Produto" data-placement="right">Imagem ( <?php echo $count?> )</a></th>
+                    <td>                                        
+                        <a  href="javascript:void(0);" title="Excluir imagem" controller="<?php echo $controller?>" id="<?php echo $value->ima_id ?>" class="remove_image text-light-gray"><i class="fa fa-trash-o"></i></a>
+                    </td>
+                </tr>
+            <?php endforeach;?>
+            </tbody>
+</table>
+</div>
+        <input  id ="categoria" type="hidden" name="categoria" value="<?php echo $this->categoria?>"/>
+		<?php echo $this->form?>
+<div id="#root-picker-outlet"></div>		
+</div>

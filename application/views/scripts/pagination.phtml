@@ -1,0 +1,29 @@
+<ul class="pagination">
+    <li>
+        <?php if ($this->previous): ?>
+        <a href="<?php echo $this->url(array('page' => $this->previous)); ?>">Ant</a>
+        <?php else: ?>
+        <a href="javascript:void(0);">Ant</a>
+        <?php endif; ?>
+    </li>
+    <?php foreach ($this->pagesInRange as $page): ?>
+    
+        <?php if ($page != $this->current): ?>
+        <li>
+            <a href="<?php echo $this->url(array('page' => $page)); ?>"><?php echo $page; ?></a>
+        </li>
+        <?php else: ?>
+        <li class="active">
+            <a href="javascript:void(0);"><?php echo $page; ?></a>
+        </li>
+        <?php endif; ?>
+    <?php endforeach; ?>
+    
+    <li>
+        <?php if ($this->next): ?>
+        <a href="<?php echo $this->url(array('page' => $this->next)); ?>">Próx</a>
+        <?php else: ?>
+        <a href="javascript:void(0);">Next</a>
+        <?php endif; ?>
+    </li>
+</ul>

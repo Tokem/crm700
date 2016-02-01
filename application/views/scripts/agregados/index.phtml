@@ -1,0 +1,73 @@
+<?php
+	$auth = Zend_Auth::getInstance();
+    $identity = $auth->getIdentity();
+
+    $request = Zend_Controller_Front::getInstance()->getRequest();
+    $controller = $request->getControllerName();
+?>
+
+<?php $flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+<?php foreach ($flashMessenger->getMessages() as $msg): ?>
+    <?php echo $msg ?>
+<?php endforeach; ?>
+
+<a href="<?php echo $this->baseUrl()?>/usuarios/cadastrar">
+<button type="button" class="btn bg-purple">+ Cadastrar Agregado</button>
+</a>
+<!-- Table Striped -->
+<br/>
+				<?php echo $this->paginator; ?>
+				<div class="box rte box-without-bottom-padding">
+					<h2 class="boxHeadline">Lista de Agregados</h2>
+					<h2 class="boxHeadline">Agregados de: <span class="label label-info"><?php echo $identity->usr_nome ?></span></h2>
+					<div class="tableWrap table-responsive">
+						<table class="table table-striped">
+							<thead>
+								 <tr>
+						            <th>#Código</th>
+						            <th>Nome</th>
+						            <th>Telefone</th>
+						            <th>Email</th>
+						            <th>Permissão</th>
+						            <th>Ativo</th>
+						            <th>Ação</th>
+						        </tr>
+							</thead>
+							<tbody>
+								<?php foreach ($this->lista as $key => $value):?>
+								<tr>
+									<th scope="row"><?php echo $value->usr_id ?></th>
+						            <td><?php echo $value->usr_nome ?></td>
+						            <td><?php echo $value->usr_celular ?></td>
+						            <td><?php echo $value->usr_email ?></td>
+						            <td><?php echo $value->usr_permissao ?></td>
+						            <td>
+						            	<?php //echo $value->usr_ativo ?>
+										<input type="checkbox" disabled="disabled" codigo-usuario="<?php echo $value->usr_id?>" class="ativo" name="ativo" <?php echo $check = ($value->usr_ativo!=0) ? 'checked' : ''; ?>>
+						            </td>
+						            <td>
+						            		<a href="<?php echo $this->baseUrl()?>/usuarios/ver/id/<?php echo $value->usr_id?>" title="Ver agregado" class="text-light-gray"><i class="fa fa-eye"></i></a>	
+						            	
+						            </td>
+								</tr>
+								<?php endforeach; ?>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<?php echo $this->paginator; ?>
+
+
+				<!-- Search modal -->
+   <div class="modal fade in" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form action="<?php echo $this->baseUrl()?>/usuarios/resultado" enctype="application/x-www-form-urlencoded" method="post">
+                        <input type="text" id="nome_usuario" class="form-control" name="nome_usuario" placeholder="Digite o nome do Usuário...">
+                        <button type="submit" class="btn">Procurar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

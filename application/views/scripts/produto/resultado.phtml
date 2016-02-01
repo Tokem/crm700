@@ -1,0 +1,82 @@
+<?php
+	$auth = Zend_Auth::getInstance();
+    $identity = $auth->getIdentity();
+
+    $request = Zend_Controller_Front::getInstance()->getRequest();
+    $controller = $request->getControllerName();
+
+
+    // var_dump($this->paginator);
+    // exit;
+?>
+
+<?php $flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+<?php foreach ($flashMessenger->getMessages() as $msg): ?>
+    <?php echo $msg ?>
+<?php endforeach; ?>
+
+<a href="<?php echo $this->baseUrl()?>/produto/cadastrar">
+<button type="button" class="btn bg-purple">+ Cadastrar Produto</button>
+</a>
+<a href="#" data-toggle="modal" data-target="#searchModal">
+<button type="button" class="btn bg-deep-purple"><i class="zmdi zmdi-search zmdi-hc-fw icon"></i> Pesquisar produto</button>
+</a>
+
+<a href="<?php echo $this->baseUrl()?>/produto/" >
+<button type="button" class="btn bg-gray"><i class="zmdi zmdi-refresh-sync zmdi-hc-fw icon"></i> Reiniciar Lista</button>
+</a>
+
+<!-- Table Striped -->
+<br/>
+				<?php echo $this->paginator; ?>
+				<div class="box rte box-without-bottom-padding">
+					<h2 class="boxHeadline">Lista de produtos</h2>
+					<!-- <h2 class="boxHeadline">Agregados de: <span class="label label-info"><?php echo $identity->usr_nome ?></span></h2> -->
+					<div class="tableWrap table-responsive">
+						<table class="table table-striped">
+							<thead>
+								 <tr>
+						            <th>#Código</th>
+						            <th>Nome</th>
+						            <th>Id Externo</th>
+						            <th>Valor</th>
+						            <th>Pontos</th>
+						            <th>Ação</th>
+						        </tr>
+							</thead>
+							<tbody>
+								<?php foreach ($this->lista as $key => $value):?>
+								<tr>
+									<th scope="row"><?php echo $value->pro_id ?></th>
+						            <td><?php echo $value->pro_nome ?></td>
+						            <td><?php echo $value->pro_identificador ?></td>
+						            <td><?php echo "R$ ".$value->pro_valor ?></td>
+						            <td><?php echo $value->pro_pontos ?></td>
+						            <td>						            	
+						            	
+						            	<a href="<?php echo $this->baseUrl()?>/produto/editar/id/<?php echo $value->pro_id?>" title="Editar usuário" class="text-light-gray"><i class="fa fa-pencil-square-o"></i></a>
+						            	<a  href="javascript:void(0);" title="Excluir produto" controller="<?php echo $controller?>" id="<?php echo $value->pro_id ?>" class="remove_item text-light-gray"><i class="fa fa-trash-o"></i></a>
+
+						            </td>
+								</tr>
+								<?php endforeach; ?>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<?php echo $this->paginator; ?>
+
+
+				<!-- Search modal -->
+   <div class="modal fade in" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form action="<?php echo $this->baseUrl()?>/produto/resultado" enctype="application/x-www-form-urlencoded" method="post">
+                        <input type="text" id="pro_nome" class="form-control" name="pro_nome" placeholder="Digite o nome do Produto...">
+                        <button type="submit" class="btn">Procurar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

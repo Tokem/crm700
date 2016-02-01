@@ -1,0 +1,32 @@
+<?php $notificacoes = (count($this->notificacoes) == 0) ? null : $this->notificacoes;?>
+<?php $notificacoes2 = (count($this->notificacoes) == 0) ? array() : $this->notificacoes;?>
+
+
+<div class="btn-group simpleList simpleListLighten messages">
+    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="zmdi zmdi-email zmdi-hc-fw icon"></i>
+
+        <span class="badge"><?php echo $notificacoes = (count($this->notificacoes) == 0) ? null : count($this->notificacoes)?></span>
+    </button>
+    
+    <ul class="dropdown-menu pull-right">
+
+
+        <?php foreach ($notificacoes2 as $key => $value):?>
+        <li>
+            <a href="<?php echo $value->not_link?>" controller="<?php echo $controller?>" id="<?php echo $value->not_id?>" title="<?php echo $value->not_tipo?>" class="ver_notificacao clearfix">
+                <span class="pull-left">
+                    <strong class="text-gray"><?php echo $value->not_tipo?></strong><br />
+                    <span class="text-gray"><?php echo $value->not_id ." - ".$value->not_mensagem?></span>
+                </span>
+                <span class="pull-right"><?php echo $this->dateTimeFormate($value->not_data)?></span>
+            </a>
+        </li>
+        <?php endforeach;?>
+        <li>
+            <a href="<?php echo $this->baseUrl()?>/notificacoes" title="#" class="clearfix text-center">
+                <i class="zmdi zmdi-plus-square icon"></i> <strong class="text-gray">Ver Todas</strong>
+            </a>
+        </li>
+    </ul>
+</div>

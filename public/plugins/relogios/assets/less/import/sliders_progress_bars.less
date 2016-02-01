@@ -1,0 +1,194 @@
+/* UI - Sliders & Progress
+=================================================================== */
+
+.ui-slider-handle {
+	display: inline-block;
+	.gradient(#fcfcfc,#f7f7f7) !important;
+	border: 1px solid #CBCBCB;
+	.border-radius(50em);
+	height: 16px;
+	width: 16px;
+	.box-shadow-double(0 1px 0 #ffffff,inset 0 1px 0 #ffffff);
+	margin-right: 12px;
+	outline: none !important;
+	margin: -3px -3px -3px -3px !important;
+	position: relative;
+	
+	&:after {
+		position: absolute;
+		content: '';
+		background: #aaa;
+		height: 6px;
+		width: 6px;
+		.border-radius(50em);
+		top: 5px;
+		left: 5px;
+	}
+}
+
+.slider {
+	border: 1px solid #C9C9C9;
+	height: 8px;
+	.border-radius(4px);
+	.box-shadow(0 1px 0 #ffffff);
+	position: relative;
+	margin: 8px 0;
+	.gradient(#fcfcfc,#f2f2f2);
+	
+	.ui-slider-range {
+		.border-radius(50em);
+		height: 8px !important;
+		position: absolute !important;
+		margin: -1px -1px 0 -1px;
+	}
+}
+
+.sliderVertical {
+	margin-top: 10px;
+	border: 1px solid #C9C9C9;
+	width: 8px !important;
+	.gradient(#fcfcfc,#f2f2f2);
+	.border-radius(4px);
+	.box-shadow(0 1px 0 #ffffff);
+	position: relative;
+	
+	.ui-slider-range {
+		width: 8px !important;
+		top: auto;
+		bottom: auto;
+		position: absolute !important;
+		margin-left: -1px;
+	}
+	
+	.ui-slider-handle {
+		margin: 0 -2px -5px -2px !important;
+	}
+}
+
+.ui-slider-range-max {
+	right: -1px;
+}
+
+.ui-slider-range-min {
+	left: -1px;
+}
+
+.sliderVertical .ui-slider-range-max {
+	top: -1px;
+}
+
+.sliderVertical .ui-slider-range-min {
+	bottom: -1px;
+}
+
+.sliderBlue .ui-slider-range, .progressBlue .ui-progressbar-value {
+	.gradient(rgba(103,194,239,1),rgba(47,171,233,1));
+	border: 1px solid #0098e4;
+}
+
+.sliderGreen .ui-slider-range, .progressGreen .ui-progressbar-value {
+	.gradient(rgba(189,234,116,1),rgba(182,227,112,1));
+	border: 1px solid #96bb5c;
+}
+
+.sliderDarkGreen .ui-slider-range, .progressDarkGreen .ui-progressbar-value {
+	.gradient(rgba(120,205,81,1),rgba(90,173,52,1));
+	border: 1px solid #3f8b1c;
+}
+
+.sliderPink .ui-slider-range, .progressPink .ui-progressbar-value {
+	.gradient(rgba(232,76,138,1),rgba(226,22,104,1));
+	border: 1px solid #9e0c47;
+}
+
+.sliderOrange .ui-slider-range, .progressOrange .ui-progressbar-value {
+	.gradient(rgba(250,96,61,1),rgba(250,88,51,1));
+	border: 1px solid #c13a1a;
+}
+
+.sliderLightOrange .ui-slider-range, .progressLightOrange .ui-progressbar-value {
+	.gradient(rgba(250,187,61,1),rgba(244,165,6,1));
+	border: 1px solid #d79103;
+}
+
+.sliderRed .ui-slider-range, .progressRed .ui-progressbar-value {
+	.gradient(rgba(255,84,84,1),rgba(255,0,0,1));
+	border: 1px solid #be0000;
+}
+
+.sliderYellow .ui-slider-range, .progressYellow .ui-progressbar-value {
+	.gradient(rgba(234,232,116,1),rgba(227,226,112,1));
+	border: 1px solid #bbb95c;
+}
+
+.sliderVertical {
+	float: left;
+    height: 100px;
+    margin-right: 40px;
+    width: 5px;
+}
+
+.progress {
+	border: 1px solid #C9C9C9;
+	height: 20px;
+	.border-radius(4px);
+	-webkit-box-shadow: 0 1px 0 #ffffff;
+	   -moz-box-shadow: 0 1px 0 #ffffff;
+			box-shadow: 0 1px 0 #ffffff;
+	background: #fcfcfc; /* Old browsers */
+	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZjZmNmYyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmMmYyZjIiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+	background: -moz-linear-gradient(top,  #fcfcfc 0%, #f2f2f2 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fcfcfc), color-stop(100%,#f2f2f2)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #fcfcfc 0%,#f2f2f2 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #fcfcfc 0%,#f2f2f2 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #fcfcfc 0%,#f2f2f2 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #fcfcfc 0%,#f2f2f2 100%); /* W3C */
+	position: relative;
+}
+
+.ui-progressbar-value {
+	height: 100%;
+	top: 1px;
+	position: absolute;
+	left: 1px;
+	.border-radius(2px);
+	border: none !important;
+}
+
+.progressBarValue span{
+	font-size: 12px;
+}
+
+.progressBarValue span.progressCustomValueVal {
+	font-size: 18px; font-weight: 700; padding:0 5px; color: #FA5833;
+}
+
+.progressSlim {
+	border: 1px solid #C9C9C9;
+	height: 8px;
+	.border-radius(4px);
+	-webkit-box-shadow: 0 1px 0 #ffffff;
+	   -moz-box-shadow: 0 1px 0 #ffffff;
+		    box-shadow: 0 1px 0 #ffffff;
+	position: relative;
+	margin: 8px 0;
+	background: #fcfcfc; /* Old browsers */
+	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZjZmNmYyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmMmYyZjIiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+	background: -moz-linear-gradient(top,  #fcfcfc 0%, #f2f2f2 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fcfcfc), color-stop(100%,#f2f2f2)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #fcfcfc 0%,#f2f2f2 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #fcfcfc 0%,#f2f2f2 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #fcfcfc 0%,#f2f2f2 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #fcfcfc 0%,#f2f2f2 100%); /* W3C */
+}
+
+.progressSlim .ui-progressbar-value {
+	border: none;
+	height: 100%;
+	top: 1px;
+	position: absolute;
+	left: 1px;
+	-webkit-border-radius: 10px;
+       -moz-border-radius: 10px;
+	        border-radius: 10px;
+}

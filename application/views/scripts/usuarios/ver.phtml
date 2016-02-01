@@ -1,0 +1,77 @@
+<?php
+
+$auth = Zend_Auth::getInstance();
+        $identity = $auth->getIdentity();
+        $this->identity = $identity;
+
+                
+                switch ($identity->usr_permissao) {
+
+                    case 'vendedor':
+                        echo "<style type='text/css'>button#btn_enviar {display: none;}</style>";
+                        break;                        
+                     case 'revendedor':
+                        echo "<style type='text/css'>button#btn_enviar {display: none;}</style>";
+                        break;       
+              }
+        
+
+?>
+
+<div class="row">
+	<button type="button" class="btn bg-blue-grey" onClick="JavaScript: window.history.back();"><i class="fa fa-mail-reply"></i> Voltar</button>
+	<?php if($this->identity->usr_permissao!="revendedor"):?>
+		<input type="checkbox" codigo-usuario="<?php echo $this->usr_id?>" class="ativo" name="ativo" <?php echo $check = ($this->usr_ativo!=0) ? 'checked' : ''; ?>>
+	<?php endif;?>
+		<?php
+
+		  $mensages = $this->form->getMessages();
+		  $this->validatorMensage($mensages);
+		
+		?>
+
+		<?php echo $this->form?>
+
+<input  id ="estado" type="hidden" name="estado" value="<?php echo $this->estado?>"/>
+<input  id ="pergunta" type="hidden" name="pergunta" value="<?php echo $this->pergunta?>"/>
+<input  id ="permissao" type="hidden" name="permissao" value="<?php echo $this->permissao?>"/>
+
+
+<div id="#root-picker-outlet"></div>		
+</div>
+<!-- Modal -->
+	<div id="modal_cep" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header rte">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h2 class="modal-title">Pesquisando CEP...</h2>
+				</div>
+				<div class="modal-body">
+					<p id="loader"><img src="<?php echo $this->baseUrl()?>/img/loader_custom.gif"> </p>
+					<p id="mensage"></p>
+				</div>
+				<div class="modal-footer">
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+<!-- Search modal -->
+    <div class="modal fade in" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form>
+                        <input type="text" id="procurar_revendedor_input" class="form-control" placeholder="Digite o nome do Revendedor...">
+                        <button type="button" class="btn btn-procurar_revendedor">Procurar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

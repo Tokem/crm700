@@ -1,0 +1,46 @@
+
+/* Skill Bars
+=================================================================== */
+.skill-bar {
+	
+	li {
+	    margin-bottom: 12px;
+	    list-style: none;
+	    margin-left: -26px;
+	    padding-left: 0px;
+	
+		h5 {
+		    margin-bottom: 6px;
+		}
+		
+		.meter {
+		    height: 23px;
+		    position: relative;
+		    background: #f6f6f6;
+			
+			span {
+			    display: block;
+			    height: 100%;
+			    position: relative;
+			    overflow: hidden;
+				
+				&:after,
+				.animate > span > span {
+				    content: "";
+				    position: absolute;
+				    top: 0;
+				    left: 0;
+				    bottom: 0;
+				    right: 0;
+				    overflow: hidden;
+				}
+				
+				&:after, 
+				.animate > span > spans li.current {
+				    background: #f16529;
+				}
+			}		
+		}
+	}
+}
+

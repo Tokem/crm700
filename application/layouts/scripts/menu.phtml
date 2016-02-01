@@ -1,0 +1,102 @@
+<?php
+    $auth = Zend_Auth::getInstance();
+    $identity = $auth->getIdentity();
+    $this->identity = $identity;
+?>
+
+<?php if($identity->usr_permissao=="revendedor"):?>
+<!-- Navigation -->
+        <nav class="simpleList asideNavigation">
+            <ul>
+                <!-- <li><a href="dashboard.html" title="#"><i class="zmdi zmdi-apps zmdi-hc-fw icon"></i> <span class="hidden-xs hidden-sm">Dashboard</span></a></li> -->
+                <li><a href="<?php echo $this->baseUrl()?>/usuarios/perfil/id/<?php echo $identity->usr_id?>" title="#"><i class="zmdi zmdi-male-alt zmdi-hc-fw icon"></i> <span class="hidden-xs hidden-sm">Minha Conta</span></a></li>
+
+                <li class="sub js-submenu">
+                    <div><i class="zmdi zmdi-assignment-o zmdi-hc-fw icon"></i> <span class="hidden-xs hidden-sm">Pedidos<i class="zmdi zmdi-plus plus"></i></span></div>
+
+                    <ul>
+                        <li><a href="<?php echo $this->baseUrl()?>/pedidos/grade" title="#">Faça seu Pedido</a></li>
+                        <li><a href="icons.html" title="#">Tabela de preços</a></li>
+                        <li><a href="<?php echo $this->baseUrl()?>/pedidos" title="#">Meus Pedidos</a></li>
+                    </ul>
+                </li>
+                
+                <li class="sub js-submenu">
+                    <div><i class="zmdi zmdi-money-box zmdi-hc-fw icon"></i> <span class="hidden-xs hidden-sm">Negócios<i class="zmdi zmdi-plus plus"></i></span></div>
+
+                    <ul>
+                        <li><a href="<?php echo $this->baseUrl()?>/usuarios/cadastrar" title="#">Agregar Revendedor</a></li>
+                        <li><a href="<?php echo $this->baseUrl()?>/agregados/" title="#">Meus Agregados</a></li>
+                        <li><a href="<?php echo $this->baseUrl()?>/negocios" title="#">Manual do revendedor</a></li>
+                    </ul>
+                </li>
+                
+                <li class="sub js-submenu">
+                    <div><i class="zmdi zmdi-ticket-star zmdi-hc-fw icon"></i>  <span class="hidden-xs hidden-sm">Premiações<i class="zmdi zmdi-plus plus"></i></span></div>
+
+                    <ul>
+                        <li><a href="<?php echo $this->baseUrl()?>/pedidos/grade" title="#">Solicitar Prêmio</a></li>
+                        <li><a href="icons.html" title="#">Lista de Prêmios</a></li>
+                        <li><a href="<?php echo $this->baseUrl()?>/negocios" title="#">Pontuação de produtos</a></li>
+                        <li><a href="<?php echo $this->baseUrl()?>/negocios" title="#">Regulamento</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="<?php echo $this->baseUrl()?>/ajuda" title="#"><i class="zmdi zmdi-help-outline zmdi-hc-fw icon"></i> <span class="hidden-xs hidden-sm">Ajuda Online</span></a></li>
+                <li><a href="<?php echo $this->baseUrl()?>/novidades" title="#"><i class="zmdi zmdi-star-outline zmdi-hc-fw icon"></i> <span class="hidden-xs hidden-sm">Novidades</span></a></li>
+                <li class="sub js-submenu">
+                    <div><i class="zmdi zmdi-loupe zmdi-hc-fw icon"></i>  <span class="hidden-xs hidden-sm">Extras<i class="zmdi zmdi-plus plus"></i></span></div>
+
+                    <ul>
+                        <li><a href="<?php echo $this->baseUrl()?>/extras/meus-clientes" title="#">Meus Clientes</a></li>
+                        <li><a href="<?php echo $this->baseUrl()?>/extras/agenda" title="#">Agenda</a></li>
+
+                    </ul>
+                </li>
+                <li><a href="<?php echo $this->baseUrl()?>/login/logout" title="#"><i class="zmdi zmdi-power zmdi-hc-fw icon"></i> <span class="hidden-xs hidden-sm">Sair</span></a></li>
+
+
+            </ul>
+
+
+        </nav>
+
+<?php endif;?>
+
+
+
+<?php if($identity->usr_permissao=="vendedor"):?>
+<!-- Navigation -->
+        <nav class="simpleList asideNavigation">
+            <ul>
+                <!-- <li><a href="dashboard.html" title="#"><i class="zmdi zmdi-apps zmdi-hc-fw icon"></i> <span class="hidden-xs hidden-sm">Dashboard</span></a></li> -->
+                <li><a href="<?php echo $this->baseUrl()?>/perfil" title="#"><i class="zmdi zmdi-male-alt zmdi-hc-fw icon"></i> <span class="hidden-xs hidden-sm">Minha Conta</span></a></li>
+                <li><a href="<?php echo $this->baseUrl()?>/desempenho" title="#"><i class="zmdi zmdi-trending-up zmdi-hc-fw icon icon"></i> <span class="hidden-xs hidden-sm">Desenpenho</span></a></li>                
+                <li><a href="<?php echo $this->baseUrl()?>/pedidos/grade" title="#"><i class="zmdi zmdi-view-subtitles zmdi-hc-fw icon"></i> <span class="hidden-xs hidden-sm">Grade</span></a></li>                
+                <li><a href="<?php echo $this->baseUrl()?>/tabela-de-precos" title="#"><i class="zmdi zmdi-grid zmdi-hc-fw icon"></i> <span class="hidden-xs hidden-sm">Tabela de preços</span></a></li>                
+                <li><a href="<?php echo $this->baseUrl()?>/carteira" title="#"><i class="zmdi zmdi-markunread-mailbox zmdi-hc-fw icon"></i> <span class="hidden-xs hidden-sm">Carteira</span></a></li>
+                <li><a href="<?php echo $this->baseUrl()?>/extras/agenda" title="#"><i class="zmdi zmdi-calendar-note zmdi-hc-fw icon"></i> <span class="hidden-xs hidden-sm">Agenda</span></a></li>
+                <li><a href="<?php echo $this->baseUrl()?>/ajuda" title="#"><i class="zmdi zmdi-help-outline zmdi-hc-fw icon"></i> <span class="hidden-xs hidden-sm">Ajuda Online</span></a></li>
+                <li><a href="<?php echo $this->baseUrl()?>/login/logout" title="#"><i class="zmdi zmdi-power zmdi-hc-fw icon"></i> <span class="hidden-xs hidden-sm">Sair</span></a></li>
+            </ul>
+        </nav>
+<?php endif;?>
+
+
+<?php if($identity->usr_permissao=="administrador"):?>
+<!-- Navigation -->
+        <nav class="simpleList asideNavigation">
+            <ul>
+                <!-- <li><a href="dashboard.html" title="#"><i class="zmdi zmdi-apps zmdi-hc-fw icon"></i> <span class="hidden-xs hidden-sm">Dashboard</span></a></li> -->
+                <li><a href="<?php echo $this->baseUrl()?>/usuarios" title="#"><i class="zmdi zmdi-male-alt zmdi-hc-fw icon"></i> <span class="hidden-xs hidden-sm">Usuários</span></a></li>
+                <li><a href="<?php echo $this->baseUrl()?>/usuarios/solicitacoes" title="#"><i class="zmdi zmdi-star-circle zmdi-hc-fw icon"></i> <span class="hidden-xs hidden-sm">Solicitações</span><span class="label label-info"><?php echo count($this->solicitacoes)?></span></a></li>
+                
+                <li><a href="<?php echo $this->baseUrl()?>/produto/" title="#"><i class="zmdi zmdi-codepen zmdi-hc-fw icon"></i> <span class="hidden-xs hidden-sm">Produtos</span></a></li>
+                <li><a href="<?php echo $this->baseUrl()?>/categoria/" title="#"><i class="zmdi zmdi-widgets zmdi-hc-fw icon"></i> <span class="hidden-xs hidden-sm">Categorias</span></a></li>
+                <li><a href="<?php echo $this->baseUrl()?>/categoria/" title="#"><i class="zmdi zmdi-shopping-cart zmdi-hc-fw icon"></i> <span class="hidden-xs hidden-sm">Pedidos</span></a></li>
+                <li><a href="<?php echo $this->baseUrl()?>/pedidos/grade" title="#"><i class="zmdi zmdi-view-subtitles zmdi-hc-fw icon"></i> <span class="hidden-xs hidden-sm">Grade</span></a></li>                
+                <li><a href="<?php echo $this->baseUrl()?>/notificacoes" title="#"><i class="zmdi zmdi-email zmdi-hc-fw icon"></i> <span class="hidden-xs hidden-sm">Notificações</span></a></li>
+                <li><a href="<?php echo $this->baseUrl()?>/login/logout" title="#"><i class="zmdi zmdi-power zmdi-hc-fw icon"></i> <span class="hidden-xs hidden-sm">Sair</span></a></li>
+            </ul>
+        </nav>
+<?php endif;?>                

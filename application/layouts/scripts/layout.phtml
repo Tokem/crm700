@@ -1,0 +1,191 @@
+<?php
+    $auth = Zend_Auth::getInstance();
+    $identity = $auth->getIdentity();
+
+    $request = Zend_Controller_Front::getInstance()->getRequest();
+    $controller = $request->getControllerName();
+
+?>
+
+<!doctype html>
+<html lang="pt_br">
+<head>
+    <?php echo $this->headMeta() ?>
+    <!-- <meta charset="utf-8"> -->
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>CRM 700 Gauss</title>
+    <meta name="description" content="...">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- Icons -->
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="<?php echo $this->baseUrl()?>/assets/bootstrap/css/bootstrap.min.css" type='text/css'>
+    <link rel="stylesheet" href="<?php echo $this->baseUrl()?>/assets/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css" type='text/css'>
+    <link rel="stylesheet" href="<?php echo $this->baseUrl()?>/assets/css/jquery-ui.min.css" type='text/css'>
+    <link rel="stylesheet" href="<?php echo $this->baseUrl()?>/assets/css/select2.min.css" type='text/css'>
+    <link rel="stylesheet" href="<?php echo $this->baseUrl()?>/assets/font-awesome-4.4.0/css/font-awesome.min.css" type='text/css'>
+    <link rel="stylesheet" href="<?php echo $this->baseUrl()?>/assets/css/fontello.css" type='text/css'>
+    <link rel="stylesheet" href="<?php echo $this->baseUrl()?>/assets/css/chartist.min.css" type='text/css'>
+    <link rel="stylesheet" href="<?php echo $this->baseUrl()?>/assets/css/fullcalendar.min.css" type='text/css'>
+    <link rel="stylesheet" href="<?php echo $this->baseUrl()?>/assets/css/fullcalendar.print.css" media='print'>
+    <?php echo $this->headLink()?>
+    <link rel="stylesheet" href="<?php echo $this->baseUrl()?>/assets/css/app.min.css" type='text/css'>
+    <link rel="stylesheet" href="<?php echo $this->baseUrl()?>/assets/css/custom.css" type='text/css'>
+    
+    <!-- Modernizr -->
+    <script src="<?php echo $this->baseUrl()?>/assets/js/modernizr-2.8.3.min.js"></script>    
+    <!-- Google fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700' rel='stylesheet' type='text/css'>
+</head>
+<body>
+    <!--[if lt IE 8]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <!-- Header -->
+    <header id="header">
+        <h1 class="logo">
+            <a href="#" title="#" class="js-nav-toggler">
+                <i class="icon icon-close"></i>
+            </a>
+            <a href="#" title="#">700<span>Gauss</span></a>
+        </h1>
+
+        <div class="pageContent">
+            <div class="container">
+                <ul class="topNavigation">
+                    <li>
+                        <?php include'notificacoes.phtml' ?>
+                    </li>
+                    <li>
+                       <!--  <div class="btn-group simpleList list-sm">
+                            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="zmdi zmdi-bookmark zmdi-hc-fw icon"></i>
+                                <span class="badge">98</span>
+                            </button>
+
+                            <ul class="dropdown-menu pull-right">
+                                <li>
+                                    <a href="#" title="#" class="clearfix">
+                                        <span class="pull-left"><i class="zmdi zmdi-accounts-add zmdi-hc-fw icon"></i> Followers</span>
+                                        <span class="pull-right info">109,073</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" title="#" class="clearfix">
+                                        <span class="pull-left"><i class="zmdi zmdi-accounts-list-alt zmdi-hc-fw icon"></i> Subscribers</span>
+                                        <span class="pull-right info">26,114</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" title="#" class="clearfix">
+                                        <span class="pull-left"><i class="zmdi zmdi-assignment-o zmdi-hc-fw icon"></i> Products sold</span>
+                                        <span class="pull-right info">1,557,669</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" title="#" class="clearfix">
+                                        <span class="pull-left"><i class="zmdi zmdi-bookmark zmdi-hc-fw icon"></i> Awards</span>
+                                        <span class="pull-right info">14</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" title="#" class="clearfix">
+                                        <span class="pull-left"><i class="zmdi zmdi-cloud-done zmdi-hc-fw icon"></i> Projects</span>
+                                        <span class="pull-right info">229</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" title="#" class="clearfix text-center">
+                                        <i class="zmdi zmdi-plus-square icon"></i> See all
+                                    </a>
+                                </li>
+                            </ul>
+                        </div> -->
+                    </li>
+                    <li>
+                        <a href="#" title="#">
+                            <i class="zmdi zmdi-settings zmdi-hc-fw icon"></i>
+                        </a>
+                    </li>
+                    <!-- <li>
+                        <a href="#" title="#" data-toggle="modal" data-target="#searchModal">
+                            <i class="zmdi zmdi-search zmdi-hc-fw icon"></i>
+                        </a>
+                    </li> -->
+                </ul>
+            </div>
+        </div>
+    </header>
+    
+    <aside class="aside">
+        <?php include'perfil.phtml'; ?>
+
+        <!-- menu -->
+        <?php include'menu.phtml';?>
+    </aside>
+
+    <!-- Page Wrap -->
+    <div class="pageWrap">
+
+        <!-- Page content -->
+        <div class="pageContent extended">
+            <div class="container">
+
+                <!-- Task Cards -->
+                <h1 class="pageTitle">
+                    <a href="#" title="#"><?php echo $this->titulo?></a>
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="dashboard.html">Home</a></li>
+                    <li class="active">Meu Perfil</li>
+                </ol>
+                
+                <!-- Painel -->
+                <div class="box">
+                    <?php echo $this->layout()->content;?>
+                </div>
+                <!-- end perfil -->
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Search modal -->
+    <!-- <div class="modal fade in" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form>
+                        <input type="text" class="form-control" placeholder="Type search term...">
+                        <button type="submit" class="btn">Go</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- JS -->
+    <script src="<?php echo $this->baseUrl()?>/assets/js/jquery-1.11.3.min.js"></script>
+    <script src="<?php echo $this->baseUrl()?>/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="<?php echo $this->baseUrl()?>/assets/js/jquery-ui.min.js"></script>
+    <script src="<?php echo $this->baseUrl()?>/assets/js/select2.min.js"></script>
+    <script src="<?php echo $this->baseUrl()?>/assets/js/parsley.min.js"></script>
+    <script src="<?php echo $this->baseUrl()?>/assets/js/throttle-debounce.min.js"></script>
+    <script src="<?php echo $this->baseUrl()?>/assets/js/jquery.shuffle.min.js"></script>
+    <script src="<?php echo $this->baseUrl()?>/assets/js/autosize.min.js"></script>
+    <script src="<?php echo $this->baseUrl()?>/assets/js/raphael-min.js"></script>
+    <script src="<?php echo $this->baseUrl()?>/assets/js/morris.min.js"></script>
+    <script src="<?php echo $this->baseUrl()?>/assets/js/Chart.min.js"></script>
+    <script src="<?php echo $this->baseUrl()?>/assets/js/chartist.min.js"></script>
+    <script src="<?php echo $this->baseUrl()?>/assets/js/moment.min.js"></script>
+    <script src="<?php echo $this->baseUrl()?>/assets/js/fullcalendar.min.js"></script>
+    <script src="<?php echo $this->baseUrl()?>/assets/js/lang-all.js"></script>
+    <script src="<?php echo $this->baseUrl()?>/assets/js/app.js"></script>
+    <?php echo $this->headScript();?>
+    
+    <div class="visible-xs visible-sm extendedChecker"></div>
+</body>
+</html>

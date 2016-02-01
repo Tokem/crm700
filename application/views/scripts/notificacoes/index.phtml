@@ -1,0 +1,63 @@
+<?php
+    $request = Zend_Controller_Front::getInstance()->getRequest();
+    $controller = $request->getControllerName();
+?>
+
+
+<?php $flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+<?php foreach ($flashMessenger->getMessages() as $msg): ?>
+    <?php echo $msg ?>
+<?php endforeach; ?>
+<?php echo $this->paginator; ?>
+
+<!-- Table Striped -->
+				<div class="box rte box-without-bottom-padding">
+					<h2 class="boxHeadline">Lista de Notificações</h2>
+					<h3 class="boxHeadlineSub">Notificações CRM 700</h3>
+					
+					<div class="tableWrap table-responsive">
+						<table class="table table-striped">
+							<thead>
+								 <tr>
+						            <th>#Código</th>
+						            <th>Tipo</th>
+						            <th>MSG</th>
+						            <th>Data</th>
+						            <th>Lida</th>
+						            <th>Data Leitura</th>
+						            <th>Ação</th>
+						        </tr>
+							</thead>
+							<tbody>
+								<?php foreach ($this->lista as $key => $value):?>
+								<tr>
+									<th scope="row"><?php echo $value->not_id?></th>
+						            
+						            <td>
+						            	<?php echo $value->not_tipo?>
+						            </td>
+						            <td>
+						            	<?php echo $value->not_mensagem?>
+						            </td>
+						            <td>
+						            	<?php echo $this->DateTimeFormate($value->not_data)?>
+						            </td>
+						            <td>
+						            	<?php  echo ($value->not_ativo == 1) ? '<span class="label label-danger">Não Lida</span>' : '<span class="label label-success">Lida</span>';?>
+						            </td>
+						            <td>
+						            	<?php echo $this->DateTimeFormate($value->not_data_leitura);?>
+						            </td>
+
+						            <td>
+						            	<a  href="javascript:void(0);" title="Excluir notificação" controller="<?php echo $controller?>" id="<?php echo $value->not_id?>" class="remove_item text-light-gray"><i class="fa fa-trash-o"></i></a>
+						            	<a  href="<?php echo $value->not_link?>" title="Ver solicitação" controller="<?php echo $controller?>" id="<?php echo $value->not_id?>" class="ver_notificacao text-light-gray"><i class="fa fa-eye"></i></a>
+						            </td>
+								</tr>
+								<?php endforeach; ?>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<?php echo $this->paginator; ?>
+				<?php //echo $this->paginator?>

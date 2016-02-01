@@ -1,0 +1,38 @@
+<div class="row">
+	<button type="button" class="btn bg-blue-grey" onClick="JavaScript: window.history.back();"><i class="fa fa-mail-reply"></i> Voltar</button>
+		<?php
+
+		  $mensages = $this->form->getMessages();
+		  //var_dump($mensages);
+		  $this->validatorMensage($mensages);
+		
+		?>
+
+		<?php echo $this->form?>
+
+<input  id ="estado" type="hidden" name="estado" value="<?php echo $this->estado?>"/>
+<input  id ="pergunta" type="hidden" name="pergunta" value="<?php echo $this->pergunta?>"/>
+<input  id ="permissao" type="hidden" name="permissao" value="<?php echo $this->permissao?>"/>
+
+
+<div id="#root-picker-outlet"></div>		
+</div>
+<!-- Modal -->
+	<div id="modal_cep" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header rte">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h2 class="modal-title">Pesquisando CEP...</h2>
+				</div>
+				<div class="modal-body">
+					<p id="loader"><img src="<?php echo $this->baseUrl()?>/img/loader_custom.gif"> </p>
+					<p id="mensage"></p>
+				</div>
+				<div class="modal-footer">
+				</div>
+			</div>
+		</div>
+	</div>

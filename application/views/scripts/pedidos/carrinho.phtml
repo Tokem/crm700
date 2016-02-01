@@ -1,0 +1,78 @@
+<style type="text/css">
+	button.btn.bg-light-blue.total_item {
+	    float: right;
+	    margin-right: 30px;
+	    margin-top: -17px;
+	}
+</style>
+
+<?php
+	$authNamespace = new Zend_Session_Namespace('Carrinho');	
+	$carrinho = $authNamespace->carrinho;
+?>
+
+<a href="<?php echo $this->baseUrl()?>/pedidos/grade">
+<button type="button" class="btn bg-purple"><i class="fa fa-cart-plus"></i>Continuar Comprando</button>
+</a>
+
+<a href="<?php echo $this->baseUrl()?>/pedidos/carrinho/id/esvaziar">
+<button type="button" class="btn btn-primary"><i class="fa fa-trash-o"></i>Zerar Pedido</button>
+</a>
+
+<!-- Table Striped -->
+				<div class="box rte box-without-bottom-padding">
+					<h2 class="boxHeadline">Conferência do(s) item(ns)</h2>
+					<?php if(!empty($carrinho)):?>
+						<div class="tableWrap table-responsive">
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th>#Código</th>
+										<th>Produto</th>
+										<th>Numeração</th>
+										<th>Quantidade</th>
+										<th>Valor Unitário</th>
+										<th>Subtotal</th>
+										<th>Ação</th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php $total=null; ?>
+									<?php ksort($carrinho);?>
+									<?php foreach ($carrinho as $key => $value):?>
+										<?php ksort($value["numeros"]);?>
+										<?php foreach ($value["numeros"] as $indice => $valor):?>
+											<tr>
+												<td><?php echo $key?></td>
+												<th scope="row"><?php echo $value["nome"]?></th>
+												<td><?php echo $indice?></td>
+												<td> 
+													<img src="<?php echo $this->baseUrl()?>/img/minus.png" style="max-width:15px" >
+													&nbsp;
+													<?php echo $valor?>
+													&nbsp;
+													<img src="<?php echo $this->baseUrl()?>/img/more.png" style="max-width:14px">
+												</td>
+												<td>R$ <?php echo $value["valor"]?></td>
+												<td>R$ <?php $total+= $valor * $value["valor"];
+														echo  $valor * $value["valor"];
+												?></td>
+												<td>
+													<a  href="javascript:void(0);" title="Excluir item" controller="" id="" class="remove_item text-light-gray"><i class="fa fa-trash-o"></i></a>
+												</td>
+											</tr>
+										<?php endforeach;?>									
+									<?php endforeach;?>								
+								</tbody>
+							</table>
+						</div>
+					<?php else:?>	
+					<div class="alert alert-warning alert-dismissible" role="alert">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+						<strong>Aviso</strong> - Seu carrinho de compras está vazio
+					</div>
+					<?php endif;?>
+
+				</div>
+
+				<button type="button" class="btn bg-light-blue total_item">TOTAL R$<?php echo @$total?></button>

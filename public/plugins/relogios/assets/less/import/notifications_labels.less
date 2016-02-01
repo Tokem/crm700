@@ -1,0 +1,107 @@
+/* Notifications & Labels
+=================================================================== */
+.notification {
+	position: absolute;
+	top: -12px;
+	right: -12px;
+	line-height: 16px;
+	height: 30px;
+	padding: 6px 10px;
+	color: white !important;
+	text-shadow: 0 1px hsla(0, 0%, 0%, 0.25);
+	border-width: 1px;
+	border-style: solid;
+	border-radius: 10px;
+  	.border-radius(50em);
+	.box-shadow-double(0 1px 1px hsla(0, 0%, 0%, 0.08), inset 0 1px hsla(0, 100%, 100%, 0.3));
+}
+
+.notification {
+	border-color: #2FABE9;
+	background-color: #67C2EF;
+	.gradient(hsl(200, 80%, 82%),hsl(200, 81%, 67%));
+}
+
+.notification.green {
+	border-color: 	#5AAD34;
+	background-color: 	#78CD51;
+	.gradient(hsl(101, 54%, 71%),hsl(101, 55%, 56%));
+}
+
+.notification.yellow {
+	border-color: #F4A506;
+	background-color: #FABB3D;
+	.gradient(hsl(40, 95%, 76%),hsl(40, 95%, 61%));
+}
+
+.notification.red {
+	border-color: #FA5833;
+	background-color: #FA603D;
+	.gradient(hsl(11, 95%, 76%),hsl(11, 95%, 61%));
+}
+
+.label,
+.badge {
+  	text-shadow: 0 -1px hsla(0, 0%, 0%, 0.25);
+	font-size: 12px;
+	padding: 3px 6px;
+}
+
+.label {
+	.border-radius(4px);
+}
+
+.label-default,
+.badge-default,
+.label-default[href],
+.badge-default[href] {
+  	border-color: darken(#999999,10%);
+	background-color: #999999;
+	.gradient(lighten(#999999,10%),#999999);
+}
+
+.label-primary,
+.badge-primary,
+.label-primary[href],
+.badge-primary[href] {
+  	border-color: darken(#468cc8,10%);
+	background-color: #468cc8;
+	.gradient(lighten(#468cc8,10%),#468cc8);
+}
+
+.label-important,
+.badge-important,
+.label-important[href],
+.badge-important[href] {
+  	border-color: #FA5833;
+	background-color: #FA603D;
+	.gradient(hsl(11, 95%, 76%),hsl(11, 95%, 61%));
+}
+
+
+.label-warning,
+.badge-warning,
+.label-warning[href],
+.badge-warning[href] {
+  	border-color: #F4A506;
+	background-color: #FABB3D;
+	.gradient(hsl(40, 95%, 76%), hsl(40, 95%, 61%));
+}
+
+.label-success,
+.badge-success,
+.label-success[href],
+.badge-success[href] {
+  	border-color: 	#5AAD34;
+	background-color: 	#78CD51;
+	.gradient(hsl(101, 54%, 71%), hsl(101, 55%, 56%));
+}
+
+.label-info,
+.badge-info,
+.label-info[href],
+.badge-info[href] {
+  	border-color: #2FABE9;
+	background-color: #67C2EF;
+	.gradient(hsl(200, 80%, 82%), hsl(200, 81%, 67%));
+}

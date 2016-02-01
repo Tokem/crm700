@@ -1,0 +1,197 @@
+<?php 
+
+	if(isset($this->sucesso)){
+		echo '
+            <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Sucesso</strong> - Produto(s) Adicionados ao seu carrinho!
+            </div>
+        ';
+	}
+?>
+<style type="text/css">
+	
+	html input[disabled] {
+    cursor: no-drop!important;
+    background-color: #EBECF2!important;
+	}
+	input.input_grade {
+    	max-width: 27px;
+	}
+
+
+.table>tbody>tr>td, .table>tfoot>tr>td, .table>thead>tr>td, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>th {
+     padding: 5px 0px 0px 5px !important;
+}
+
+th.th_unico {
+    background: #b0aafc;
+    opacity: 0.5;
+}
+</style>
+<a href="#" data-toggle="modal" data-target="#searchModal">
+<button type="button" class="btn bg-deep-purple"><i class="zmdi zmdi-search zmdi-hc-fw icon"></i> Pesquisar produto</button>
+</a>
+
+
+<?php 
+
+	$authNamespace = new Zend_Session_Namespace('Carrinho');	
+	$carrinho = $authNamespace->carrinho;
+
+	if(isset($authNamespace->carrinho)){
+		echo "<a href='carrinho'>
+				<button type='button' class='btn bg-light-blue'><i class='zmdi zmdi-shopping-cart zmdi-hc-fw icon'></i> Verificar Pedido<i class='zmdi zmdi-long-arrow-right zmdi-hc-fw icon'></i></button>
+			 </a>";
+	};
+
+	// echo "<a href='#'>
+	// 			<button type='button' class='btn bg-light-blue'> Total R$ <span class='label label-danger'>$itens</span></button>
+	// 		 </a>";
+?>
+
+<br/>
+
+<!-- Table Striped -->
+<?php echo $this->paginator; ?>
+				<div class="box rte box-without-bottom-padding">					
+					<h2 class="boxHeadline">Grade de produtos</h2>
+					<h3 class="boxHeadlineSub">produtos disponíveis</h3>
+					<div class="tableWrap table-responsive">
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th>Produto</th>
+									<th>33</th>
+									<th>34</th>
+									<th>35</th>
+									<th>36</th>
+									<th>37</th>
+									<th>38</th>
+									<th>39</th>
+									<th>40</th>
+									<th>41</th>
+									<th>42</th>
+									<th>43</th>
+									<th>44</th>
+									<th>45</th>
+									<th>Único</th>
+									<th>PP</th>
+									<th>P</th>
+									<th>M</th>
+									<th>G</th>
+									<th>GG</th>
+								</tr>
+							</thead>
+							<tbody>
+								<form action="<?php echo $this->baseUrl()?>/pedidos/grade" enctype="application/x-www-form-urlencoded" method="post">
+								<?php foreach ($this->lista as $key => $value):?>
+								<tr>
+									<th>
+										<a href="javascript:void(0)" class="image_hover" rel="popover" data-content="<img style='max-width:200px;' src='<?php echo $this->baseUrl()?>/uploads/produtos/<?php echo $value["ima_nome"]?>'>"  data-placement="right"> <?php echo $value["pro_nome"]?> </a></th>										
+										<input type="hidden" name="<?php echo $value['pro_nome']?>[id]" value="<?php echo $value['pro_id']?>"/></th>
+										<input type="hidden" name="<?php echo $value['pro_nome']?>[nome]" value="<?php echo $value['pro_nome']?>"/></th>
+										<input type="hidden" name="<?php echo $value['pro_nome']?>[pontos]" value="<?php echo $value['pro_pontos']?>"/></th>
+										<input type="hidden" name="<?php echo $value['pro_nome']?>[valor]" value="<?php echo $value['pro_valor']?>"/></th>
+									<th>
+										<?php $result =  array_search("33",json_decode($value["pro_tamanhos"])) ?>
+											<input type="text" class="input_grade" <?php echo $disable = (is_int($result)) ? "" : "disabled='disabled'";?>  maxlength="3" name="<?php echo $value['pro_nome']?>[numeros][33]" value=""/></th>
+										<?php $result = null;?>
+									<th>
+										<?php $result =  array_search("34",json_decode($value["pro_tamanhos"])) ?>
+											<input type="text" class="input_grade" <?php echo $disable = (is_int($result)) ? "" : "disabled='disabled'";?>  maxlength="3" name="<?php echo $value['pro_nome']?>[numeros][34]" value=""/></th>
+										<?php $result = null;?>
+									<th>
+										<?php $result =  array_search("35",json_decode($value["pro_tamanhos"])) ?>
+											<input type="text" class="input_grade" <?php echo $disable = (is_int($result)) ? "" : "disabled='disabled'";?>  maxlength="3" name="<?php echo $value['pro_nome']?>[numeros][35]" value=""/></th>
+										<?php $result = null;?>
+									<th>
+										<?php $result =  array_search("36",json_decode($value["pro_tamanhos"])) ?>
+											<input type="text" class="input_grade" <?php echo $disable = (is_int($result)) ? "" : "disabled='disabled'";?>  maxlength="3" name="<?php echo $value['pro_nome']?>[numeros][36]" value=""/></th>
+										<?php $result = null;?>
+									<th>
+										<?php $result =  array_search("37",json_decode($value["pro_tamanhos"])) ?>
+											<input type="text" class="input_grade" <?php echo $disable = (is_int($result)) ? "" : "disabled='disabled'";?>  maxlength="3" name="<?php echo $value['pro_nome']?>[numeros][37]" value=""/></th>
+										<?php $result = null;?>
+									</th>
+									<th>
+										<?php $result =  array_search("38",json_decode($value["pro_tamanhos"])) ?>
+											<input type="text" class="input_grade" <?php echo $disable = (is_int($result)) ? "" : "disabled='disabled'";?>  maxlength="3" name="<?php echo $value['pro_nome']?>[numeros][38]" value=""/></th>
+										<?php $result = null;?>
+									<th>
+										<?php $result =  array_search("39",json_decode($value["pro_tamanhos"])) ?>
+											<input type="text" class="input_grade" <?php echo $disable = (is_int($result)) ? "" : "disabled='disabled'";?>  maxlength="3" name="<?php echo $value['pro_nome']?>[numeros][39]" value=""/></th>
+										<?php $result = null;?>
+									<th>
+										<?php $result =  array_search("40",json_decode($value["pro_tamanhos"])) ?>
+											<input type="text" class="input_grade" <?php echo $disable = (is_int($result)) ? "" : "disabled='disabled'";?>  maxlength="3" name="<?php echo $value['pro_nome']?>[numeros][40]" value=""/></th>
+										<?php $result = null;?>
+									<th>
+										<?php $result =  array_search("41",json_decode($value["pro_tamanhos"])) ?>
+											<input type="text" class="input_grade" <?php echo $disable = (is_int($result)) ? "" : "disabled='disabled'";?>  maxlength="3" name="<?php echo $value['pro_nome']?>[numeros][41]" value=""/></th>
+										<?php $result = null;?>
+									<th>
+										<?php $result =  array_search("42",json_decode($value["pro_tamanhos"])) ?>
+											<input type="text" class="input_grade" <?php echo $disable = (is_int($result)) ? "" : "disabled='disabled'";?>  maxlength="3" name="<?php echo $value['pro_nome']?>[numeros][42]" value=""/></th>
+										<?php $result = null;?>
+									<th>
+										<?php $result =  array_search("43",json_decode($value["pro_tamanhos"])) ?>
+											<input type="text" class="input_grade" <?php echo $disable = (is_int($result)) ? "" : "disabled='disabled'";?>  maxlength="3" name="<?php echo $value['pro_nome']?>[numeros][43]" value=""/></th>
+										<?php $result = null;?>
+									<th>
+										<?php $result =  array_search("44",json_decode($value["pro_tamanhos"])) ?>
+											<input type="text" class="input_grade" <?php echo $disable = (is_int($result)) ? "" : "disabled='disabled'";?>  maxlength="3" name="<?php echo $value['pro_nome']?>[numeros][44]" value=""/></th>
+										<?php $result = null;?>
+									<th>
+										<?php $result =  array_search("45",json_decode($value["pro_tamanhos"])) ?>
+											<input type="text" class="input_grade" <?php echo $disable = (is_int($result)) ? "" : "disabled='disabled'";?>  maxlength="3" name="<?php echo $value['pro_nome']?>[numeros][45]" value=""/></th>
+										<?php $result = null;?>
+									<th class="th_unico">
+										<?php $result =  array_search("Unico",json_decode($value["pro_tamanhos"])) ?>
+											<input type="text" class="input_grade" <?php echo $disable = (is_int($result)) ? "" : "disabled='disabled'";?>  maxlength="3" name="<?php echo $value['pro_nome']?>[numeros][unico]" value=""/></th>
+										<?php $result = null;?>
+									<th>
+										<?php $result =  array_search("pp",json_decode($value["pro_tamanhos"])) ?>
+											<input type="text" class="input_grade" <?php echo $disable = (is_int($result)) ? "" : "disabled='disabled'";?>  maxlength="3" name="<?php echo $value['pro_nome']?>[numeros][pp]" value=""/></th>
+										<?php $result = null;?>
+									<th>
+										<?php $result =  array_search("p",json_decode($value["pro_tamanhos"])) ?>
+											<input type="text" class="input_grade" <?php echo $disable = (is_int($result)) ? "" : "disabled='disabled'";?>  maxlength="3" name="<?php echo $value['pro_nome']?>[numeros][p]" value=""/></th>
+										<?php $result = null;?>
+									<th>
+										<?php $result =  array_search("m",json_decode($value["pro_tamanhos"])) ?>
+											<input type="text" class="input_grade" <?php echo $disable = (is_int($result)) ? "" : "disabled='disabled'";?>  maxlength="3" name="<?php echo $value['pro_nome']?>[numeros][m]" value=""/></th>
+										<?php $result = null;?>
+									<th>
+										<?php $result =  array_search("g",json_decode($value["pro_tamanhos"])) ?>
+											<input type="text" class="input_grade" <?php echo $disable = (is_int($result)) ? "" : "disabled='disabled'";?>  maxlength="3" name="<?php echo $value['pro_nome']?>[numeros][g]" value=""/></th>
+										<?php $result = null;?>
+									<th>
+										<?php $result =  array_search("gg",json_decode($value["pro_tamanhos"])) ?>
+											<input type="text" class="input_grade" <?php echo $disable = (is_int($result)) ? "" : "disabled='disabled'";?>  maxlength="3" name="<?php echo $value['pro_nome']?>[numeros][gg]" value=""/></th>
+										<?php $result = null;?>
+								</tr>
+								<?php endforeach;?>
+							
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<?php echo $this->paginator; ?>
+				<br/>
+				<button type="submit" class="btn bg-purple">Incluir Pedido</button>
+				</form>	
+
+				<!-- Search modal -->
+   <div class="modal fade in" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form action="<?php echo $this->baseUrl()?>/usuarios/resultado" enctype="application/x-www-form-urlencoded" method="post">
+                        <input type="text" id="nome_usuario" class="form-control" name="nome_usuario" placeholder="Digite o nome do Produto...">
+                        <button type="submit" class="btn">Procurar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

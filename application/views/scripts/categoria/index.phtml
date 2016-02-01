@@ -1,0 +1,70 @@
+<?php
+
+	// var_dump($this->paginator);
+	// var_dump($this->lista);
+
+	// exit;
+
+    $request = Zend_Controller_Front::getInstance()->getRequest();
+    $controller = $request->getControllerName();
+?>
+
+<?php $flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+<?php foreach ($flashMessenger->getMessages() as $msg): ?>
+    <?php echo $msg ?>
+<?php endforeach; ?>
+
+<a href="<?php echo $this->baseUrl()?>/categoria/cadastrar">
+<button type="button" class="btn bg-purple">+ Cadastrar Categoria</button>
+</a>
+
+<!-- <a href="#" data-toggle="modal" data-target="#searchModal">
+<button type="button" class="btn bg-deep-purple"><i class="zmdi zmdi-search zmdi-hc-fw icon"></i> Pesquisar Categoria</button>
+</a> -->
+
+
+<!-- Table Striped -->
+<br/>
+				<?php echo $this->paginator; ?>
+				<div class="box rte box-without-bottom-padding">
+					<h2 class="boxHeadline">Lista de Categorias</h2>
+					<h3 class="boxHeadlineSub">Categorias de produtos do sistema CRM 700 Gauss</h3>
+					<div class="tableWrap table-responsive">
+						<table class="table table-striped">
+							<thead>
+								 <tr>
+						            <th>#Código</th>
+						            <th>Nome</th>
+						            <th>Ação</th>
+						        </tr>
+							</thead>
+							<tbody>
+								<?php foreach ($this->paginator as $key => $value):?>
+								<tr>
+									<th scope="row"><?php echo $value->cat_id ?></th>
+						            <td><?php echo $value->cat_nome ?></td>
+						            <td>
+						            	<a href="<?php echo $this->baseUrl()?>/categoria/editar/id/<?php echo $value->cat_id?>" title="Editar usuário" class="text-light-gray"><i class="fa fa-pencil-square-o"></i></a>
+						            	<a  href="javascript:void(0);" title="Excluir categoria" controller="<?php echo $controller?>" id="<?php echo $value->cat_id ?>" class="remove_item text-light-gray"><i class="fa fa-trash-o"></i></a>
+						            </td>
+								</tr>
+								<?php endforeach; ?>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<?php echo $this->paginator; ?>
+
+				<!-- Search modal -->
+   <div class="modal fade in" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form action="<?php echo $this->baseUrl()?>/categoria/resultado" enctype="application/x-www-form-urlencoded" method="post">
+                        <input type="text" id="nome_categoria" class="form-control" name="nome_categoria" placeholder="Digite o nome da categoria...">
+                        <button type="submit" class="btn">Procurar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

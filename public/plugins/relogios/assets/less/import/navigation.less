@@ -1,0 +1,90 @@
+/* Navigation Section
+=================================================================== */
+.sidebar-nav > ul {
+	border-top: 1px solid #0a0c0e !important;
+  	border-bottom: 1px solid #212121 !important;
+	border-left: none;
+	border-right: none;
+	padding-bottom: 1px;
+}
+
+.nav-tabs.nav-stacked > li > a {
+  	margin: -2px 0 0 0;
+	padding: 8px 20px 0px 20px;
+	color: #ddd;
+	border-top: 1px solid #212121;
+  	border-bottom: 1px solid #0a0c0e;
+	border-left: none;
+	border-right: none;
+  	background: transparent;
+	filter: none;
+	text-shadow: 0 1px 1px #000;
+  	.border-radius;
+	height: 38px;
+}
+
+.nav-tabs.nav-stacked > li > a:hover > i {
+	opacity: .8;
+}
+
+.nav-tabs.nav-stacked > li > a:hover {
+  	margin: -2px 0 0 0;
+	color: #fff;
+  	border-top: 1px solid transparent;
+  	border-bottom: 1px solid #0a0c0e;
+	border-left: none;
+	border-right: none;
+  	background: rgba(0,0,0,.25);
+	filter: none;
+	text-shadow: 0 1px 1px #000;
+	.box-shadow-double(inset 0 1px 1px rgba(0,0,0,0.45), inset 0 0 1px rgba(0,0,0,0.25));
+  	.border-radius;
+}
+
+.nav-tabs.nav-stacked  > li.active > a {
+	margin: -2px 0 0 0;
+  	border-top: 1px solid transparent;
+  	border-bottom: 1px solid #0a0c0e;
+	border-left: none;
+	border-right: none;
+  	color: #fff;
+  	background: rgba(0,0,0,.45);
+	text-shadow: 0 1px 1px #000;
+	.box-shadow-double(inset 0 1px 1px rgba(0,0,0,0.45), inset 0 0 1px rgba(0,0,0,0.25));
+  	.border-radius;
+}
+
+.nav-tabs.nav-stacked > li:first-child > a {
+	margin: 0;
+  	.border-radius;
+}
+
+.nav-tabs.nav-stacked > li:last-child > a {
+  	.border-radius;
+}
+
+.sidebar-nav > ul > li > ul {
+	margin: 0;
+	padding: 5px 0 5px 25px;
+	background: rgba(0,0,0,.45);
+	list-style: none;
+	display: none;
+}
+
+.sidebar-nav > ul > li > ul > li {
+	padding: 5px 0 5px 0;
+}
+
+.sidebar-nav > ul > li > ul > li > a:hover {
+	color: #fff;
+	text-decoration: none;
+}
+
+.nav-tabs.nav-stacked > li > a > i,
+.nav-tabs.nav-stacked > li > ul > li > a > i {
+	opacity: .4;
+	margin-right: 10px;
+	width: 20px;
+	display: inline-block;
+	text-align: center;
+}

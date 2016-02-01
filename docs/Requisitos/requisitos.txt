@@ -1,0 +1,21 @@
+1-usr_id_carteira = "Refere-se ao id do vendedor ou seja (Carteira de clientes)"
+2-usr_id_agregado = "refere-se ao id do revendedor que indicou ou seja(Agregado ou Indicação)"
+3-quando o adminitrador fizer a indicação do vendedor, o vendedor "X" vai receber a notificação
+4-Produto tem desconto individual por cliente.
+5-Desempenho individual por usuario(administrador);
+6-Administrador cadastra meta.
+7-Visão Painel(relogios da soma de todos(Painel);
+8-Permissão - Painel
+
+
+1-Administrador (v)
+2-Vendedor (v)
+3-Revendedor (v)
+4-Notificações (v)
+
+1-Carteira no vendedor
+2-perfil vendedor  = para todos
+3-Vendedor pode cadastrar revendedor?
+
+1-Solicitação de cadastro sem código de vendedor - pode ser definido depois
+

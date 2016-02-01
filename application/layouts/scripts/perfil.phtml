@@ -1,0 +1,12 @@
+<?php 
+	$auth = Zend_Auth::getInstance();
+    $identity = $auth->getIdentity();
+?>
+
+<!-- User profile -->
+<div class="asideUserProfile">
+    <a href="user-profile.html" title="#" class="c">
+        <img src="<?php echo $this->baseUrl()?>/tmp/perfil-210-210.jpg" alt="#" class="img-responsive">
+        <span class="name hidden-xs hidden-sm"><?php echo $identity->usr_nome?><br /> <?php echo $identity->usr_permissao ?></span>
+    </a>
+</div>
