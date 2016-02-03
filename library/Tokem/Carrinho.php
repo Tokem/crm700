@@ -80,10 +80,6 @@ class Tokem_Carrinho {
                 **/
 
                 $this->_authNamespace->carrinho[$c]["numeros"][$j]+=$i;
-
-                // echo "j ".$this->_authNamespace->carrinho[$c]["numeros"][$j];
-                // echo "i ".$i;
-                // exit;
                                 
               }else{
                 /**
@@ -136,6 +132,25 @@ class Tokem_Carrinho {
     }
 
     $this->_authNamespace->carrinho = $this->_pedido;
+
+  }
+
+
+  function excluirItem($id,$numero){
+
+
+                    
+                    $this->_authNamespace->carrinho;
+                        
+                    $flashMessenger = $this->_helper->FlashMessenger;   
+                    $flashMessenger->addMessage('
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong>Sucesso</strong> - Tudo ocorreu bem!
+                        </div>
+                        ');
+
+
 
   }
 

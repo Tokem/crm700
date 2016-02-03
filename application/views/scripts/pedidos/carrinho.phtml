@@ -4,6 +4,10 @@
 	    margin-right: 30px;
 	    margin-top: -17px;
 	}
+
+	#alert_sucesso {
+    color: #ffffff!important;
+	}
 </style>
 
 <?php
@@ -53,12 +57,13 @@
 													&nbsp;
 													<img src="<?php echo $this->baseUrl()?>/img/more.png" style="max-width:14px">
 												</td>
-												<td>R$ <?php echo $value["valor"]?></td>
+												<td>R$ <?php echo number_format( $value["valor"] , 2, ',', '.');?></td>
 												<td>R$ <?php $total+= $valor * $value["valor"];
-														echo  $valor * $value["valor"];
+														$total = $valor * $value["valor"];
+														echo number_format( $total , 2, ',', '.');
 												?></td>
 												<td>
-													<a  href="javascript:void(0);" title="Excluir item" controller="" id="" class="remove_item text-light-gray"><i class="fa fa-trash-o"></i></a>
+													<a  href="javascript:void(0);" numeracao="<?php echo $indice?>" idproduto="<?php echo $key?>" title="Excluir item" controller="" id="" class="remover_item_do_carrinho text-light-gray"><i class="fa fa-trash-o"></i></a>
 												</td>
 											</tr>
 										<?php endforeach;?>									
@@ -75,4 +80,4 @@
 
 				</div>
 
-				<button type="button" class="btn bg-light-blue total_item">TOTAL R$<?php echo @$total?></button>
+				<button type="button" class="btn bg-light-blue total_item">TOTAL R$<?php echo @number_format( $total , 2, ',', '.');?></button>

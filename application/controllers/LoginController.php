@@ -21,9 +21,6 @@ class LoginController extends Tokem_ControllerBase {
     public function indexAction() {
 
 
-        //var_dump($_POST);
-        //exit;
-
         $auth = Zend_Auth::getInstance();
         $loggedIn= $auth->hasIdentity();    
 
