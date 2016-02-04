@@ -162,6 +162,45 @@ class Tokem_Carrinho  {
 
   }
 
-}
 
-?>
+
+  function somarItem($id,$numero){
+                    
+                    $authNamespace = new Zend_Session_Namespace('Carrinho');                    
+                    $exists = array_key_exists($id, $authNamespace->carrinho);
+                    if($exists){
+                      $qtd = 1;
+                      $this->_authNamespace->carrinho[$id]["numeros"][$numero]+=$qtd;
+                      
+                      return true;
+                      exit;
+                    }else{
+                       return false; 
+                       exit; 
+                    }                    
+
+  }
+
+  function subtrairItem($id,$numero){
+                    
+                    $authNamespace = new Zend_Session_Namespace('Carrinho');                    
+                    $exists = array_key_exists($id, $authNamespace->carrinho);
+                    if($exists){
+                      $qtd = 1;
+                      if($this->_authNamespace->carrinho[$id]["numeros"][$numero]>1){
+                        $this->_authNamespace->carrinho[$id]["numeros"][$numero]-=$qtd;  
+                      }
+                      
+                      return true;
+                      exit;
+                    }else{
+                       return false; 
+                       exit; 
+                    }                    
+
+  }
+
+
+
+
+}

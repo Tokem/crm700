@@ -56,12 +56,29 @@ class PedidosController extends Tokem_ControllerBase
 
     public function somarItemAction()
     {
+
+        $request = $this->getRequest();        
+        $dados = $this->getRequest()->getParams();
+
+        if($request->isXmlHttpRequest() && $request->isPost()){
+            $this->_carrinho->somarItem($dados["id"],$dados["numero"]);
+            exit;    
+        }
         
     }
 
 
-    public function subtrairitemItemAction()
+
+
+    public function subtrairItemAction()
     {
+        $request = $this->getRequest();        
+        $dados = $this->getRequest()->getParams();
+
+        if($request->isXmlHttpRequest() && $request->isPost()){
+            $this->_carrinho->subtrairItem($dados["id"],$dados["numero"]);
+            exit;    
+        }
         
     }
 

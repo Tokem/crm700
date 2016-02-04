@@ -24,6 +24,12 @@
 	#alert_sucesso {
     color: #ffffff!important;
 	}
+	
+	input.quantidade {
+    max-width: 21px;
+    background: transparent;
+    border: none;
+	}
 </style>
 
 
@@ -79,12 +85,18 @@
 												<td><?php echo $key?></td>
 												<th scope="row"><?php echo $value["nome"]?></th>
 												<td><?php echo $indice?></td>
-												<td> 
-													<img src="<?php echo $this->baseUrl()?>/img/minus.png" style="max-width:15px" >
+												<td>
+													<a href="javascript:void(0)" class="subtrair_item" idprodutosub="<?php echo $key?>" numerosub="<?php echo $indice?>"> 
+														<img src="<?php echo $this->baseUrl()?>/img/minus.png" style="max-width:15px" >
+													</a>
 													&nbsp;
-													<?php echo $valor?>
+													<span>
+														<input class="quantidade" id="quantidade_<?php echo $key?>" value="<?php echo $valor?>"/>
+													</span>
 													&nbsp;
+													<a href="javascript:void(0)" class="somar_item" idprodutosoma="<?php echo $key?>" numerosoma="<?php echo $indice?>">
 													<img src="<?php echo $this->baseUrl()?>/img/more.png" style="max-width:14px">
+													</a>
 												</td>
 												<td>R$ <?php echo number_format( $value["valor"] , 2, ',', '.');?></td>
 												<td>R$ <?php $subtotal+= $valor * $value["valor"];
@@ -96,8 +108,17 @@
 													<a  href="javascript:void(0);" numeracao="<?php echo $indice?>" idproduto="<?php echo $key?>" title="Excluir item" controller="" id="" class="remover_item_do_carrinho text-light-gray"><i class="fa fa-trash-o"></i></a>
 												</td>
 											</tr>
-										<?php endforeach;?>									
-									<?php endforeach;?>								
+										<?php endforeach;?>											
+									<?php endforeach;?>		
+									<tr>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td>Total</td>
+												<td><span style="font-size: 16px;" class="label label-primary">R$<?php echo @number_format( $total , 2, ',', '.');?></span></td>
+												<td></td>
+											</tr>															
 								</tbody>
 							</table>
 						</div>
@@ -109,5 +130,9 @@
 					<?php endif;?>
 
 				</div>
-
-				<button type="button" class="btn bg-light-blue total_item">TOTAL R$<?php echo @number_format( $total , 2, ',', '.');?></button>
+				<br/>
+				<div id="button_pagamento" style="float: right;">
+					<button type="button"  id="botao_pagamento" class="btn bg-light-blue total_item" style="margin-right: 0%"><i class="zmdi zmdi-card zmdi-hc-fw"></i> Prosseguir para o pagamento</button>
+				</div>
+				<br/>
+				<!-- <button type="button" class="btn bg-light-blue total_item">TOTAL </button>				 -->

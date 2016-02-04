@@ -48,47 +48,13 @@ if($(".ativo").length>0){
             data:{usr_id:codigo,usr_ativo:ativo},
             success: function(result) {
 
-                // console.log(result);
-                // return false;
-
-                //var obj = jQuery.parseJSON(result);
-                // if(result!=1){
-
-                //             $.ajax({
-                //                 url: caminho,
-                //                 type: 'POST',
-                //                 data:{usr_id:codigo, usr_ativo:ativo},
-                //                 success: function(result) {
-
-                //                     console.log(result);
-                //                     return false;
-
-                                    if(result==1){
-                                        alertify.defaults.glossary.title = 'CRM 700 Gauss';
-                                        alertify.alert("Status do usuário modificado!");
-                                    }else{
-                                         alertify.defaults.glossary.title = 'ERRO CRM 700 Gauss';
-                                         alertify.alert("Ocorreu um erro inesperado!");
-                                    } 
-                                    
-
-                            //         return false;
-                            //     },error: function(e) {
-                            //         alertify.defaults.glossary.title = 'ERRO CRM 700 Gauss';
-                            //         alertify.alert("Ocorreu um erro inesperado");
-                            //     }
-                            // });
-                    
-                    // }else{
-                    //    alertify.defaults.glossary.title = 'CRM 700 Gauss';
-                    //    alertify.confirm("Revendedor sem código de Vendedor! Adicione o código para ativar, Você será redirecionado...", function(){
-
-                    //             alert("ok");
-
-                    //     });
-                    // }
-                    
-
+                if(result==1){
+                    alertify.defaults.glossary.title = 'CRM 700 Gauss';
+                    alertify.alert("Status do usuário modificado!");
+                }else{
+                     alertify.defaults.glossary.title = 'ERRO CRM 700 Gauss';
+                     alertify.alert("Ocorreu um erro inesperado!");
+                } 
                     // return false;
             },error: function(e) {
                 alertify.defaults.glossary.title = 'ERRO CRM 700 Gauss';
