@@ -48,9 +48,26 @@ class PedidosController extends Tokem_ControllerBase
 
     }
 
-    public function detalhesAction()
-    {
+    public function resultadoAction(){
+
+
+        $dados = $this->getRequest()->getParams();
+        $request = $this->getRequest();                
+
+       if ($request->isPost()){
+          $nome = $dados["pro_nome"];
+          $list = $this->_produtos->getAllByName($nome);
+        }else{
+           $list = array(); 
+        }
         
+        $paginator = Zend_Paginator::factory($list);
+        $paginator->setCurrentPageNumber($this->_getParam('page'));
+        $paginator->setItemCountPerPage(200);
+        $this->view->lista = $paginator;
+        //$this->view->paginator = $paginator;
+
+
     }
 
 

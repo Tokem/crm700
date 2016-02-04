@@ -23,5 +23,19 @@ class Application_Model_Produto extends Zend_Db_Table
     }
 
 
+    public function getAllByName($name){
+
+        $db = $this->getDefaultAdapter();
+        $lista = $db->select()->from(array('pr' => 'produto'))
+                 ->distinct()
+                 ->join(array('im' => 'imagens'),'pr.pro_id = im.pro_id_fk')
+                 ->where("pr.pro_nome LIKE '%$name%'")
+                 ->order(array('pr.pro_nome DESC'));
+                 // ->query()->fetchAll();    
+
+        return $produtos =  $db->fetchAll($lista);
+    }
+
+
 }
 
