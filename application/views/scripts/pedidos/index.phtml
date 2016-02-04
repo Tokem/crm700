@@ -1,3 +1,13 @@
+<?php
+    $request = Zend_Controller_Front::getInstance()->getRequest();
+    $controller = $request->getControllerName();
+?>
+
+<?php $flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+<?php foreach ($flashMessenger->getMessages() as $msg): ?>
+    <?php echo $msg ?>
+<?php endforeach; ?>
+
 <a href="<?php echo $this->baseUrl()?>/pedidos/grade">
 <button type="button" class="btn bg-purple">+ Faça pedido</button>
 </a>

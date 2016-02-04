@@ -22,9 +22,8 @@ $(function(){
                         id: idProduto,
                         numero: numeracaoProduto,
                     }, beforeSend: function() {
-                    }, success: function(e) {
-                    	console.log(e);
-                        var notification = alertify.notify('<span id="alert_sucesso">Item excluido com sucesso</span>', 'success', 5, function(){  console.log('sucesso'); });
+                    }, success: function(e) {                    	
+                        location.reload();                    
                     }, error: function(e) {
                         window.location.replace(redirect);
                     }

@@ -50,7 +50,19 @@ class PedidosController extends Tokem_ControllerBase
 
     public function detalhesAction()
     {
-        $this->view->titulo = "Detalhes do Pedido";
+        
+    }
+
+
+    public function somarItemAction()
+    {
+        
+    }
+
+
+    public function subtrairitemItemAction()
+    {
+        
     }
 
 
@@ -61,7 +73,28 @@ class PedidosController extends Tokem_ControllerBase
         $dados = $this->getRequest()->getParams();
 
         if($request->isXmlHttpRequest() && $request->isPost()){
-           $this->_carrinho->excluirItem($dados["id"],$dados["numero"]);
+           $return = $this->_carrinho->excluirItem($dados["id"],$dados["numero"]);
+
+           if($return){
+            $flashMessenger = $this->_helper->FlashMessenger;   
+                      $flashMessenger->addMessage('
+                          <div class="alert alert-success alert-dismissible" role="alert">
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <strong>Sucesso</strong> - Item excluído!
+                          </div>
+            ');
+             echo true;
+             exit;         
+           }
+           else{
+            $flashMessenger = $this->_helper->FlashMessenger;   
+                        $flashMessenger->addMessage('<div class="alert alert-danger alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <strong>ERRO</strong> - Ocorreu um erro inesperado! se persistir entre em contato com o suporte!
+                        </div>');
+           }
+           echo "error";
+           exit;
         }
                 
 

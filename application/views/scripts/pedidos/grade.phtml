@@ -29,6 +29,18 @@ th.th_unico {
     opacity: 0.5;
 }
 </style>
+
+<div class="boxHeader box">
+					<h1 class="pageTitle">
+						<a href="#" title="#">Onde você está!</a>
+					</h1>
+					<ol class="breadcrumb">
+						<li><a href="#"><i class="zmdi zmdi-mouse zmdi-hc-fw"></i> Escolhendo produtos</a></li>
+						<li><a href="#"><i class="zmdi zmdi-eye zmdi-hc-fw"></i> Verificando seu pedido</a></li>
+						<li><a href="#"><i class="zmdi zmdi-card zmdi-hc-fw"></i> Efetuando pagamento</a></li>
+					</ol>
+</div>
+
 <a href="#" data-toggle="modal" data-target="#searchModal">
 <button type="button" class="btn bg-deep-purple"><i class="zmdi zmdi-search zmdi-hc-fw icon"></i> Pesquisar produto</button>
 </a>
@@ -39,15 +51,12 @@ th.th_unico {
 	$authNamespace = new Zend_Session_Namespace('Carrinho');	
 	$carrinho = $authNamespace->carrinho;
 
-	if(isset($authNamespace->carrinho)){
+	if(!empty($authNamespace->carrinho)){
 		echo "<a href='carrinho'>
 				<button type='button' class='btn bg-light-blue'><i class='zmdi zmdi-shopping-cart zmdi-hc-fw icon'></i> Verificar Pedido<i class='zmdi zmdi-long-arrow-right zmdi-hc-fw icon'></i></button>
 			 </a>";
 	};
 
-	// echo "<a href='#'>
-	// 			<button type='button' class='btn bg-light-blue'> Total R$ <span class='label label-danger'>$itens</span></button>
-	// 		 </a>";
 ?>
 
 <br/>

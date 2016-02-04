@@ -2,7 +2,7 @@
 
 /*@author: RODOLFO ALMEIDA*/
 
-class Tokem_Carrinho {
+class Tokem_Carrinho  {
 
 
   protected $_pedido = array();
@@ -15,7 +15,6 @@ class Tokem_Carrinho {
   function __construct(){
     $this->_authNamespace = new Zend_Session_Namespace('Carrinho');
   }
-
 
 
   function verificarAtualizar($dados){
@@ -137,22 +136,32 @@ class Tokem_Carrinho {
 
 
   function excluirItem($id,$numero){
-
-
                     
-                    $this->_authNamespace->carrinho;
-                        
-                    $flashMessenger = $this->_helper->FlashMessenger;   
-                    $flashMessenger->addMessage('
-                        <div class="alert alert-success alert-dismissible" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <strong>Sucesso</strong> - Tudo ocorreu bem!
-                        </div>
-                        ');
+                    $authNamespace = new Zend_Session_Namespace('Carrinho');                    
+                    $exists = array_key_exists($id, $authNamespace->carrinho);
+                    if($exists){
+                      // echo $numero;
+                      // echo $this->_authNamespace->carrinho[$id]["numeros"][$numero];
+                      //   exit;
+                      $qtd =count($this->_authNamespace->carrinho[$id]["numeros"])."<br/>";
 
+                      if($qtd>1){
+                        unset($this->_authNamespace->carrinho[$id]["numeros"][$numero]);                                            
+                      }
 
+                      if($qtd==1){
+                        unset($this->_authNamespace->carrinho[$id]);                                            
+                      }
+                      
+                      return true;
+                      exit;
+                    }else{
+                       return false; 
+                       exit; 
+                    }                    
 
   }
 
 }
+
 ?>

@@ -9,6 +9,7 @@ class LoginController extends Tokem_ControllerBase {
     }
 
     protected function _getAuthAdapter() {
+        
         $dbAdapter = Zend_Db_Table::getDefaultAdapter();
         $adapter = new Zend_Auth_Adapter_DbTable($dbAdapter);
         $adapter->setTableName('usuarios')

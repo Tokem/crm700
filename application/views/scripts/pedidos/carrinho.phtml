@@ -1,3 +1,19 @@
+<?php
+    $request = Zend_Controller_Front::getInstance()->getRequest();
+    $controller = $request->getControllerName();
+?>
+
+<?php $flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+<?php foreach ($flashMessenger->getMessages() as $msg): ?>
+    <?php echo $msg ?>
+<?php endforeach; ?>
+
+
+<?php
+	$authNamespace = new Zend_Session_Namespace('Carrinho');	
+	$carrinho = $authNamespace->carrinho;
+?>
+
 <style type="text/css">
 	button.btn.bg-light-blue.total_item {
 	    float: right;
@@ -10,10 +26,18 @@
 	}
 </style>
 
-<?php
-	$authNamespace = new Zend_Session_Namespace('Carrinho');	
-	$carrinho = $authNamespace->carrinho;
-?>
+
+
+<div class="boxHeader box">
+					<h1 class="pageTitle">
+						<a href="#" title="#">Onde você está!</a>
+					</h1>
+					<ol class="breadcrumb">
+						<li><a href="#"><i class="zmdi zmdi-mouse zmdi-hc-fw"></i> Escolhendo produtos</a></li>
+						<li><a href="#"><i class="zmdi zmdi-eye zmdi-hc-fw"></i> Verificando seu pedido</a></li>
+						<li><a href="#"><i class="zmdi zmdi-card zmdi-hc-fw"></i> Efetuando pagamento</a></li>
+					</ol>
+</div>
 
 <a href="<?php echo $this->baseUrl()?>/pedidos/grade">
 <button type="button" class="btn bg-purple"><i class="fa fa-cart-plus"></i>Continuar Comprando</button>
@@ -21,6 +45,10 @@
 
 <a href="<?php echo $this->baseUrl()?>/pedidos/carrinho/id/esvaziar">
 <button type="button" class="btn btn-primary"><i class="fa fa-trash-o"></i>Zerar Pedido</button>
+</a>
+
+<a href="<?php echo $this->baseUrl()?>/pedidos/carrinho">
+<button type="button" class="btn bg-light-green"><i class="zmdi zmdi-refresh-sync zmdi-hc-fw"></i> Atualizar Carrinho</button>
 </a>
 
 <!-- Table Striped -->
@@ -41,6 +69,7 @@
 									</tr>
 								</thead>
 								<tbody>
+									<?php $subtotal=null; ?>
 									<?php $total=null; ?>
 									<?php ksort($carrinho);?>
 									<?php foreach ($carrinho as $key => $value):?>
@@ -58,9 +87,10 @@
 													<img src="<?php echo $this->baseUrl()?>/img/more.png" style="max-width:14px">
 												</td>
 												<td>R$ <?php echo number_format( $value["valor"] , 2, ',', '.');?></td>
-												<td>R$ <?php $total+= $valor * $value["valor"];
-														$total = $valor * $value["valor"];
-														echo number_format( $total , 2, ',', '.');
+												<td>R$ <?php $subtotal+= $valor * $value["valor"];
+														$subtotal = $valor * $value["valor"];
+														echo number_format( $subtotal , 2, ',', '.');
+														$total+= $subtotal;
 												?></td>
 												<td>
 													<a  href="javascript:void(0);" numeracao="<?php echo $indice?>" idproduto="<?php echo $key?>" title="Excluir item" controller="" id="" class="remover_item_do_carrinho text-light-gray"><i class="fa fa-trash-o"></i></a>

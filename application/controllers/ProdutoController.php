@@ -244,6 +244,7 @@ class ProdutoController extends Tokem_ControllerBase
                 $produto->pro_identificador = $dados["pro_identificador"];
                 $produto->pro_descricao = $dados["pro_descricao"];
                 $produto->pro_valor = $valor;
+                $produto->cat_id_fk= $dados["select_categoria"];
                 $produto->pro_tamanhos = $json;
                 $produto->pro_pontos = $dados["pro_pontos"];
                 $produto->save();

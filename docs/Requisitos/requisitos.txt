@@ -19,3 +19,35 @@
 
 1-Solicitação de cadastro sem código de vendedor - pode ser definido depois
 
+Obs: no pedido adicionar campo de ceodigo de rastreamento dos correios
+3-Sistema de notificação por email.
+
+
+Pagamentos:
+
+1-Pagar agora(pagseguro).
+2-Negociar com o vendedor.
+   -Boleto(Bradesco)(bloqueado), à vista(bloqueado), Cartão delivery(bloqueado).
+   Pago, Pagamento pendente, Cancelado, Finalizado
+3-Usar Créditos.
+
+OBS: após a finalização do pedido o pedido o vendedor pode dar desconto
+No ato do desconto colocar informações do vendedor 
+
+--Pendências.
+--Cupom de desconto. => input
+--Usar Créditos => button
+
+Status do pedido:
+
+1-Pedido realizado
+2-Confirmação de pagamento(Pago, Pagamento pendente, Cancelado)
+3-Separação de protudos
+  OBS: API dos Correios	
+	4-Pedido em transito.
+	5-Pedido finalizado.
+
+
+
+
+Créditos:
