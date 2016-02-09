@@ -106,7 +106,17 @@ class PedidosController extends Tokem_ControllerBase
 
         $this->view->headLink()->appendStylesheet('/crm700/public/plugins/alertifyjs/css/alertify.min.css');
         $this->view->headScript()->appendFile($this->_baseUrl . '/plugins/alertifyjs/alertify.min.js');
-        $this->view->headScript()->appendFile($this->_baseUrl . '/files_js/controllers/pedidos/pagamento.js');
+
+
+        $this->view->headLink()->appendStylesheet('/crm700/public/plugins/form_validation/vendor/bootstrap/css/bootstrap.css');
+        $this->view->headLink()->appendStylesheet('/crm700/public/plugins/form_validation/dist/css/formValidation.css');
+
+        $this->view->headScript()->appendFile($this->_baseUrl . '/plugins/form_validation/vendor/bootstrap/js/bootstrap.min.js');
+        $this->view->headScript()->appendFile($this->_baseUrl . '/plugins/form_validation/dist/js/formValidation.js');
+        $this->view->headScript()->appendFile($this->_baseUrl . '/plugins/form_validation/dist/js/framework/bootstrap.js');
+        $this->view->headScript()->appendFile($this->_baseUrl . '/plugins/bootstrapvalidator/src/js/language/pt_BR.js');
+
+        $this->view->headScript()->appendFile($this->_baseUrl . '/files_js/controllers/pagamento/pagamento.js');
 
         $request = $this->getRequest();        
         $dados = $this->getRequest()->getParams();
@@ -116,7 +126,7 @@ class PedidosController extends Tokem_ControllerBase
             exit;    
         }
         
-        $this->view->headScript()->appendFile($this->_baseUrl . '/files_js/controllers/pagamento/pagseguro.js');
+        //$this->view->headScript()->appendFile($this->_baseUrl . '/files_js/controllers/pagamento/pagseguro.js');
     }
 
 

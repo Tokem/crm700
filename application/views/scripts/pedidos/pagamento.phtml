@@ -18,8 +18,8 @@ input#ano_validade {
 						<a href="#" title="#">Onde você está!</a>
 					</h1>
 					<ol class="breadcrumb">
-						<li><a href="#"><i class="zmdi zmdi-mouse zmdi-hc-fw"></i> Escolhendo produtos</a></li>
-						<li><a href="#"><i class="zmdi zmdi-eye zmdi-hc-fw"></i> Verificando seu pedido</a></li>
+						<li><a href="#" style="color: #A29F9E;"><i class="zmdi zmdi-mouse zmdi-hc-fw"></i> Escolhendo produtos</a></li>
+						<li><a href="#" style="color: #A29F9E;"><i class="zmdi zmdi-eye zmdi-hc-fw"></i> Verificando seu pedido</a></li>
 						<li><a href="#"><i class="zmdi zmdi-card zmdi-hc-fw"></i> Efetuando pagamento</a></li>
 					</ol>
 </div>
@@ -64,48 +64,48 @@ input#ano_validade {
 
 							<div class="tab-content">
 								<div role="tabpanel" class="tab-pane fade active in" id="tab-item-1">
-									<form>
+									<form  id="form_cartao" role="form" enctype="application/x-www-form-urlencoded"  method="post">
 										<div class="form-group">
-											<label for="basicInput">Nome do dono do cartão</label>
-											<input type="text" class="form-control" id="nome_cartao" placeholder="Escreva como está no cartão">
+											<label for="nome_cartao">Nome do dono do cartão</label>
+											<input type="text" class="form-control" id="nome_cartao" name="nome_cartao" placeholder="Escreva como está no cartão">
 										</div>
 										
 										<div class="row">
 											<div class="col-xs-12 col-sm-4">
 												<div class="form-group">
-													<label for="basicInput">Data de aniversário</label>
-													<input type="text" class="form-control" id="dia_aniversario" placeholder="Dia">
+													<label for="dia_aniversario">Data de aniversário</label>
+													<input type="text" class="form-control" id="dia_aniversario" name="dia_aniversario" placeholder="Dia">
 												</div>
 											</div>
 											<div class="col-xs-12 col-sm-4">
 												<div class="form-group">
-													<label for="basicInputActive"></label>
-													<input type="text" class="form-control" id="mes_aniversario" placeholder="Mês">
+													<label for="mes_aniversario"></label>
+													<input type="text" class="form-control" id="mes_aniversario" name="mes_aniversario" placeholder="Mês">
 												</div>
 											</div>
 											<div class="col-xs-12 col-sm-4">
 												<div class="form-group">
-													<label for="basicInputActive"></label>
-													<input type="text" class="form-control" id="ano_aniversario" placeholder="Ano">
+													<label for="ano_aniversario"></label>
+													<input type="text" class="form-control" id="ano_aniversario" name="ano_aniversario" placeholder="Ano">
 												</div>
 											</div>
 										</div>
 
 										<div class="form-group">
-											<label for="basicInput">CPF do dono do cartão</label>
-											<input type="text" class="form-control" id="nome_cartao" placeholder="ex: 064.782.785-48">
+											<label for="cpf">CPF do dono do cartão</label>
+											<input type="text" class="form-control" id="cpf" name="cpf" placeholder="ex: 064.782.785-48">
 										</div>
 
 										<div class="form-group">
-											<label for="basicInput">Número do cartão de crédito</label>
-											<input type="text" class="form-control" id="nome_cartao" placeholder="">
+											<label for="numero_cartao">Número do cartão de crédito</label>
+											<input type="text" class="form-control" id="numero_cartao" name="numero_cartao" placeholder="">
 										</div>
 
 										<div class="row">
 											<div class="col-xs-12 col-sm-4">
 												<div class="form-group">
-													<label for="basicInput">Data de validade do cartão</label>
-													<input type="text" class="form-control" id="mes_validade" placeholder="Mês">
+													<label for="mes_validade">Data de validade do cartão</label>
+													<input type="text" class="form-control" id="mes_validade" name="mes_validade" placeholder="Mês">
 												</div>
 											</div>
 											<div class="col-xs-12 col-sm-4">
