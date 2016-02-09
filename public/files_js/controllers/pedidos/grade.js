@@ -58,9 +58,10 @@ $(function(){
                         numero: numeracaoProduto,
                     }, beforeSend: function() {
                     }, success: function(e) {
-                        var valor = parseInt($( "#quantidade_"+idProduto).val());
+                        var valor = parseInt($( "#quantidade_"+idProduto+"_"+numeracaoProduto).val());
                         valor +=1;
-                        $( "#quantidade_"+idProduto).val(valor)
+                        console.log(numeracaoProduto);
+                        $( "#quantidade_"+idProduto+"_"+numeracaoProduto).val(valor)
                         return false;
                         
                     }, error: function(e) {
@@ -93,12 +94,14 @@ $(function(){
                         numero: numeracaoProduto,
                     }, beforeSend: function() {
                     }, success: function(e) {
-                        var valor = parseInt($( "#quantidade_"+idProduto).val());
+
+                        
+                        var valor = parseInt($( "#quantidade_"+idProduto+"_"+numeracaoProduto).val());
                         if(valor>1){
                           valor -=1;  
                         }
                         
-                        $( "#quantidade_"+idProduto).val(valor)
+                        $( "#quantidade_"+idProduto+"_"+numeracaoProduto).val(valor)
                         return false;
                         
                     }, error: function(e) {
