@@ -1,0 +1,145 @@
+<style type="text/css">
+input#mes_aniversario {
+    margin-top: 5px;
+}
+
+input#ano_aniversario {
+    margin-top: 5px;
+}
+
+input#ano_validade {
+    margin-top: 6px;
+}
+</style>
+
+
+<div class="boxHeader box">
+					<h1 class="pageTitle">
+						<a href="#" title="#">Onde você está!</a>
+					</h1>
+					<ol class="breadcrumb">
+						<li><a href="#"><i class="zmdi zmdi-mouse zmdi-hc-fw"></i> Escolhendo produtos</a></li>
+						<li><a href="#"><i class="zmdi zmdi-eye zmdi-hc-fw"></i> Verificando seu pedido</a></li>
+						<li><a href="#"><i class="zmdi zmdi-card zmdi-hc-fw"></i> Efetuando pagamento</a></li>
+					</ol>
+</div>
+<a href='carrinho'>
+	<button type='button' class='btn bg-light-blue'><i class="fa fa-chevron-circle-left"></i> Verificar Pedido<i class='zmdi zmdi-shopping-cart zmdi-hc-fw icon'></i></button>
+</a>
+<a href="<?php echo $this->baseUrl()?>/pedidos/grade">
+<button type="button" class="btn bg-purple"><i class="fa fa-cart-plus"></i>Continuar Comprando</button>
+</a>
+</br>
+</br>
+<?php
+	$authNamespace = new Zend_Session_Namespace('Carrinho');	
+	$carrinho = $authNamespace->carrinho;
+?>
+
+<?php $itens = null;?>
+<?php $total = null;?>
+<?php $subtotal = null;?>
+
+<?php foreach ($carrinho as $key => $value):?>
+	<?php foreach ($value["numeros"] as $indice => $valor):?>
+		<?php $subtotal+= $valor * $value["valor"];
+				$subtotal = $valor * $value["valor"];
+				$total+= $subtotal;
+		?>
+<?php endforeach;?>
+<?php endforeach;?>
+
+<h2 class="boxHeadline">Valor total da compra:</h2><span style="font-size: 16px;" class="label label-primary">R$<?php echo @number_format( $total , 2, ',', '.');?></span></br>
+</br>
+</br>
+<h2 class="boxHeadline">Formas de pagamento</h2>
+<h3 class="boxHeadlineSub">Escolha como deseja pagar seu pedido</h3>
+<div class="row">
+						<div class="col-xs-12 col-lg-9" style="margin-left: 12%">
+							<ul class="nav nav-tabs" role="tablist">
+								<li role="presentation" class="active"><a href="#tab-item-1" aria-controls="tab-item-1" role="tab" data-toggle="tab" aria-expanded="true"><i class="zmdi zmdi-card zmdi-hc-fw"></i> Cartão de crédito</a></li>
+								<li role="presentation" class=""><a href="#tab-item-2" aria-controls="tab-item-2" role="tab" data-toggle="tab" aria-expanded="false"><i class="fa fa-barcode"></i>&nbsp;&nbsp;Boleto</a></li>
+								<li role="presentation" class=""><a href="#tab-item-3" aria-controls="tab-item-3" role="tab" data-toggle="tab" aria-expanded="false"><i class="fa fa-user"></i>&nbsp;&nbsp;Negociar com o vendedor</a></li>																
+							</ul>
+
+							<div class="tab-content">
+								<div role="tabpanel" class="tab-pane fade active in" id="tab-item-1">
+									<form>
+										<div class="form-group">
+											<label for="basicInput">Nome do dono do cartão</label>
+											<input type="text" class="form-control" id="nome_cartao" placeholder="Escreva como está no cartão">
+										</div>
+										
+										<div class="row">
+											<div class="col-xs-12 col-sm-4">
+												<div class="form-group">
+													<label for="basicInput">Data de aniversário</label>
+													<input type="text" class="form-control" id="dia_aniversario" placeholder="Dia">
+												</div>
+											</div>
+											<div class="col-xs-12 col-sm-4">
+												<div class="form-group">
+													<label for="basicInputActive"></label>
+													<input type="text" class="form-control" id="mes_aniversario" placeholder="Mês">
+												</div>
+											</div>
+											<div class="col-xs-12 col-sm-4">
+												<div class="form-group">
+													<label for="basicInputActive"></label>
+													<input type="text" class="form-control" id="ano_aniversario" placeholder="Ano">
+												</div>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label for="basicInput">CPF do dono do cartão</label>
+											<input type="text" class="form-control" id="nome_cartao" placeholder="ex: 064.782.785-48">
+										</div>
+
+										<div class="form-group">
+											<label for="basicInput">Número do cartão de crédito</label>
+											<input type="text" class="form-control" id="nome_cartao" placeholder="">
+										</div>
+
+										<div class="row">
+											<div class="col-xs-12 col-sm-4">
+												<div class="form-group">
+													<label for="basicInput">Data de validade do cartão</label>
+													<input type="text" class="form-control" id="mes_validade" placeholder="Mês">
+												</div>
+											</div>
+											<div class="col-xs-12 col-sm-4">
+												<div class="form-group">
+													<label for="basicInputActive"></label>
+													<input type="text" class="form-control" id="ano_validade" placeholder="Ano">
+												</div>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label for="basicInput">Código de segurança do cartão (CCV)</label>
+											<input type="text" class="form-control" id="nome_cartao" placeholder="Verifique na parte de trás do cartão">
+										</div>
+
+
+										<div class="form-group">
+											<label for="basicInput">Parcelas</label>
+											<input type="text" class="form-control" id="nome_cartao" placeholder="Parcelas">
+										</div>
+										<br/>
+										<button type="submit"  id="botao_pagamento" class="btn bg-light-blue total_item" style="margin-right: 0%">Efetuar Pagamento</button>
+
+									</form>
+								</div>
+								<div role="tabpanel" class="tab-pane fade" id="tab-item-2">
+									
+								</div>
+								<div role="tabpanel" class="tab-pane fade" id="tab-item-3">
+									
+								</div>
+							</div>
+						</div>
+
+						
+					</div>
+<!-- <button type="button"  id="botao_pagamento" class="btn bg-light-blue total_item" style="margin-right: 0%">Efetuar Pagamento <i class="fa fa-chevron-circle-right"></i></button> -->
