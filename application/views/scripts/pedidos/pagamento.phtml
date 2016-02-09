@@ -145,16 +145,23 @@ select#ano_validade {
 										</div>
 
 										<div class="form-group">
+											<img src="<?php echo $this->baseUrl()?>/img/card_back.png" id="card_back" style="margin-bottom: 14px;">
+
 											<label for="basicInput">Código de segurança do cartão (CCV)</label>
 											<input type="text" maxlength="4" class="form-control" id="codigo_seguranca" name="codigo_seguranca" placeholder="Verifique na parte de trás do cartão">
 										</div>
 
 
-										<div class="form-group" style="display:none">
+										<div class="form-group">
 											<label for="basicInput">Parcelas</label>
-											<input type="text" class="form-control" id="nome_cartao" placeholder="Parcelas">
+											<select class=" form-control js-select" id="parcelas" name="parcelas">
+														<option disabled selected>- Informe os dados do cartão para calcular -</option>
+											</select>
 										</div>
 										<br/>
+										<div class="form-group">
+											<img src="<?php echo $this->baseUrl()?>/img/selo_pag.gif" id="selo_pag" style="margin-bottom: 14px;margin-top: -6px">
+										</div>
 										<button type="submit"  id="botao_pagamento" class="btn bg-light-blue total_item" style="margin-right: 0%">Efetuar Pagamento</button>
 
 									</form>
