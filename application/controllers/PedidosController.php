@@ -100,6 +100,26 @@ class PedidosController extends Tokem_ControllerBase
     }
 
 
+    public function pagamentoAction()
+    {
+
+
+        $this->view->headLink()->appendStylesheet('/crm700/public/plugins/alertifyjs/css/alertify.min.css');
+        $this->view->headScript()->appendFile($this->_baseUrl . '/plugins/alertifyjs/alertify.min.js');
+        $this->view->headScript()->appendFile($this->_baseUrl . '/files_js/controllers/pedidos/pagamento.js');
+
+        $request = $this->getRequest();        
+        $dados = $this->getRequest()->getParams();
+
+        if($request->isXmlHttpRequest() && $request->isPost()){
+            $this->_carrinho->somarItem($dados["id"],$dados["numero"]);
+            exit;    
+        }
+        
+        $this->view->headScript()->appendFile($this->_baseUrl . '/files_js/controllers/pagamento/pagseguro.js');
+    }
+
+
     public function excluirItemAction()
     {
 
@@ -121,7 +141,7 @@ class PedidosController extends Tokem_ControllerBase
              exit;         
            }
            else{
-            $flashMessenger = $this->_helper->FlashMessenger;   
+                        $flashMessenger = $this->_helper->FlashMessenger;   
                         $flashMessenger->addMessage('<div class="alert alert-danger alert-dismissible" role="alert">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <strong>ERRO</strong> - Ocorreu um erro inesperado! se persistir entre em contato com o suporte!
@@ -142,7 +162,7 @@ class PedidosController extends Tokem_ControllerBase
         $list = $this->_produtos->getAll();
         $paginator = Zend_Paginator::factory($list);
         $paginator->setCurrentPageNumber($this->_getParam('page'));
-        $paginator->setItemCountPerPage(4);
+        $paginator->setItemCountPerPage(20);
 
         Zend_Paginator::setDefaultScrollingStyle('Sliding');
         Zend_View_Helper_PaginationControl::setDefaultViewPartial('pagination.phtml');
@@ -159,11 +179,29 @@ class PedidosController extends Tokem_ControllerBase
         unset($dados["action"]);
         unset($dados["module"]);
 
-
         if(empty($authNamespace->carrinho)){
-            $this->_carrinho->adicionar($dados);
+            $return = $this->_carrinho->adicionar($dados);
+            if($return=="empty_post"){
+                  $flashMessenger = $this->_helper->FlashMessenger;   
+                  $flashMessenger->addMessage('<div class="alert alert-danger alert-dismissible" role="alert">
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <strong>ERRO</strong> - Você precisa escolher ao menos um item para adicionar!
+                  </div>');
+          
+                $this->_helper->redirector('grade');     
+            }
         }else{
-            $this->_carrinho->verificarAtualizar($dados);
+
+            $return = $this->_carrinho->verificarAtualizar($dados);
+            if($return=="empty_post"){
+                  $flashMessenger = $this->_helper->FlashMessenger;   
+                  $flashMessenger->addMessage('<div class="alert alert-danger alert-dismissible" role="alert">
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <strong>ERRO</strong> - Você precisa escolher ao menos um item para adicionar!
+                  </div>');
+          
+                $this->_helper->redirector('grade');     
+            }
         }
         
         $this->view->sucesso = 1;

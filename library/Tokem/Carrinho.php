@@ -42,6 +42,11 @@ class Tokem_Carrinho  {
                 }
     }
 
+    // faz a verificação se o post veio vazio
+    if(empty($this->_global)){
+          return "empty_post";
+    }
+
     /**
       Faz A verificação
     **/
@@ -128,6 +133,11 @@ class Tokem_Carrinho  {
                 if($aux > 4){                    
                     $this->_pedido[$value['id']] = $value;
                 }
+    }
+
+
+    if(empty($this->_pedido)){
+          return "empty_post";
     }
 
     $this->_authNamespace->carrinho = $this->_pedido;

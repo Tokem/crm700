@@ -602,7 +602,8 @@ class UsuariosController extends Tokem_ControllerBase
                 $usuario->usr_celular =$dados["usr_celular"];
                 $usuario->usr_vende =$dados["select_pergunta"];
                 $usuario->usr_vende_resposta =$dados["que_resposta"];
-                $usuario->usr_permissao =$permissao;
+                $usuario->usr_permissao =$dados["select_permissao"];
+                $usuario->usr_tabela =$dados["usr_tabela"];
                 $usuario->usr_id_fk_carteira =$carteira;
                 $usuario->usr_id_fk_agregado =$agregado;
 

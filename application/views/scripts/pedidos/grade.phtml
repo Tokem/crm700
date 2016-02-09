@@ -1,3 +1,13 @@
+<?php
+    $request = Zend_Controller_Front::getInstance()->getRequest();
+    $controller = $request->getControllerName();
+?>
+
+<?php $flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+<?php foreach ($flashMessenger->getMessages() as $msg): ?>
+    <?php echo $msg ?>
+<?php endforeach; ?>
+
 <?php 
 
 	if(isset($this->sucesso)){
@@ -53,7 +63,7 @@ th.th_unico {
 
 	if(!empty($authNamespace->carrinho)){
 		echo "<a href='carrinho'>
-				<button type='button' class='btn bg-light-blue'><i class='zmdi zmdi-shopping-cart zmdi-hc-fw icon'></i> Verificar Pedido<i class='zmdi zmdi-long-arrow-right zmdi-hc-fw icon'></i></button>
+				<button type='button' class='btn bg-light-blue'><i class='zmdi zmdi-shopping-cart zmdi-hc-fw icon'></i> Verificar Pedido<i class='fa fa-chevron-circle-right'></i></button>
 			 </a>";
 	};
 
