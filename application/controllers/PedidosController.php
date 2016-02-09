@@ -116,6 +116,7 @@ class PedidosController extends Tokem_ControllerBase
         $this->view->headScript()->appendFile($this->_baseUrl . '/plugins/form_validation/dist/js/framework/bootstrap.js');
         $this->view->headScript()->appendFile($this->_baseUrl . '/plugins/bootstrapvalidator/src/js/language/pt_BR.js');
 
+        $this->view->headScript()->appendFile($this->_baseUrl . '/plugins/vanilla-masker/vanilla-masker.js');
         $this->view->headScript()->appendFile($this->_baseUrl . '/files_js/controllers/pagamento/pagamento.js');
 
         $request = $this->getRequest();        

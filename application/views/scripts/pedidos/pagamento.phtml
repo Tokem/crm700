@@ -1,14 +1,14 @@
 <style type="text/css">
-input#mes_aniversario {
+select#mes_aniversario {
     margin-top: 5px;
 }
 
-input#ano_aniversario {
+select#ano_aniversario {
     margin-top: 5px;
 }
 
-input#ano_validade {
-    margin-top: 6px;
+select#ano_validade {
+    margin-top: 5px;
 }
 </style>
 
@@ -74,19 +74,34 @@ input#ano_validade {
 											<div class="col-xs-12 col-sm-4">
 												<div class="form-group">
 													<label for="dia_aniversario">Data de aniversário</label>
-													<input type="text" class="form-control" id="dia_aniversario" name="dia_aniversario" placeholder="Dia">
+													<select class=" form-control js-select" id="dia_aniversario" name="dia_aniversario">
+														<option disabled selected>- Dia -</option>
+														<?php for ($i=1;$i<=31;$i++):?>
+															<option value="<?php echo $i?>"><?php echo $i?></option>
+														<?php endfor;?>
+													</select>
 												</div>
 											</div>
 											<div class="col-xs-12 col-sm-4">
 												<div class="form-group">
 													<label for="mes_aniversario"></label>
-													<input type="text" class="form-control" id="mes_aniversario" name="mes_aniversario" placeholder="Mês">
+													<select class=" form-control js-select" id="mes_aniversario" name="mes_aniversario">
+														<option disabled selected>- Mês -</option>
+														<?php for ($i=1;$i<=12;$i++):?>
+															<option value="<?php echo $i?>"><?php echo $i?></option>
+														<?php endfor;?>
+													</select>
 												</div>
 											</div>
 											<div class="col-xs-12 col-sm-4">
 												<div class="form-group">
 													<label for="ano_aniversario"></label>
-													<input type="text" class="form-control" id="ano_aniversario" name="ano_aniversario" placeholder="Ano">
+													<select class=" form-control js-select" id="ano_aniversario" name="ano_aniversario">
+														<option disabled selected>- Ano -</option>
+														<?php for ($i=1930;$i<=Date('Y')-18;$i++):?>
+															<option value="<?php echo $i?>"><?php echo $i?></option>
+														<?php endfor;?>
+													</select>
 												</div>
 											</div>
 										</div>
@@ -97,6 +112,9 @@ input#ano_validade {
 										</div>
 
 										<div class="form-group">
+											<img src="<?php echo $this->baseUrl()?>/img/cartoes.png">
+										</div>	
+										<div class="form-group">
 											<label for="numero_cartao">Número do cartão de crédito</label>
 											<input type="text" class="form-control" id="numero_cartao" name="numero_cartao" placeholder="">
 										</div>
@@ -105,24 +123,34 @@ input#ano_validade {
 											<div class="col-xs-12 col-sm-4">
 												<div class="form-group">
 													<label for="mes_validade">Data de validade do cartão</label>
-													<input type="text" class="form-control" id="mes_validade" name="mes_validade" placeholder="Mês">
+													<select class=" form-control js-select" id="mes_validade" name="mes_validade">
+														<option disabled selected>- Mês -</option>
+														<?php for ($i=1;$i<=12;$i++):?>
+															<option value="<?php echo $i?>"><?php echo $i?></option>
+														<?php endfor;?>
+													</select>
 												</div>
 											</div>
 											<div class="col-xs-12 col-sm-4">
 												<div class="form-group">
 													<label for="basicInputActive"></label>
-													<input type="text" class="form-control" id="ano_validade" placeholder="Ano">
+													<select class=" form-control js-select" id="ano_validade" name="ano_validade">
+														<option disabled selected>- Ano -</option>
+														<?php for ($i=Date('Y');$i<=Date('Y')+15;$i++):?>
+															<option value="<?php echo $i?>"><?php echo $i?></option>
+														<?php endfor;?>
+													</select>
 												</div>
 											</div>
 										</div>
 
 										<div class="form-group">
 											<label for="basicInput">Código de segurança do cartão (CCV)</label>
-											<input type="text" class="form-control" id="nome_cartao" placeholder="Verifique na parte de trás do cartão">
+											<input type="text" maxlength="4" class="form-control" id="codigo_seguranca" name="codigo_seguranca" placeholder="Verifique na parte de trás do cartão">
 										</div>
 
 
-										<div class="form-group">
+										<div class="form-group" style="display:none">
 											<label for="basicInput">Parcelas</label>
 											<input type="text" class="form-control" id="nome_cartao" placeholder="Parcelas">
 										</div>
