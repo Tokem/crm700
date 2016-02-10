@@ -1,3 +1,8 @@
+<?php
+	$auth = Zend_Auth::getInstance();
+    $identity = $auth->getIdentity();
+?>
+
 <style type="text/css">
 select#mes_aniversario {
     margin-top: 5px;
@@ -28,6 +33,9 @@ select#ano_validade {
 </a>
 <a href="<?php echo $this->baseUrl()?>/pedidos/grade">
 <button type="button" class="btn bg-purple"><i class="fa fa-cart-plus"></i>Continuar Comprando</button>
+</a>
+<a href="<?php echo $this->baseUrl()?>/pedidos/usar-creditos">
+<button type="button" class="btn bg-light-green"><i class="fa fa-money"></i> Usar Créditos (<?php echo @number_format( $identity->usr_creditos , 2, ',', '.')?>)</button>
 </a>
 </br>
 </br>
@@ -65,6 +73,15 @@ select#ano_validade {
 							<div class="tab-content">
 								<div role="tabpanel" class="tab-pane fade active in" id="tab-item-1">
 									<form  id="form_cartao" role="form" enctype="application/x-www-form-urlencoded"  method="post">
+
+										<input type="hidden" name="tokem" id="tokem" value="<?php echo $this->tokem ?>"/>
+										
+										<div class="form-group">
+										<div class="alert alert-info alert-dismissible" role="alert">
+											<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+											<strong>Aviso</strong> - O pagamento poderá levar alguns minutos para ser processado
+										</div>
+										</div>	
 										<div class="form-group">
 											<label for="nome_cartao">Nome do dono do cartão</label>
 											<input type="text" class="form-control" id="nome_cartao" name="nome_cartao" placeholder="Escreva como está no cartão">
