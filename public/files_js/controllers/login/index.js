@@ -54,7 +54,7 @@ function onLoginSuccess(e) {
           $("#mensagem").hide();   
         }, success: function(e) {
 
-            //console.log(e);
+            console.log(e);
 
           setTimeout( function() {
                     $("#btn-login").html("Login");                    

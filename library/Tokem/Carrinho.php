@@ -150,10 +150,10 @@ class Tokem_Carrinho  {
                     $authNamespace = new Zend_Session_Namespace('Carrinho');                    
                     $exists = array_key_exists($id, $authNamespace->carrinho);
                     if($exists){
-                      // echo $numero;
-                      // echo $this->_authNamespace->carrinho[$id]["numeros"][$numero];
-                      //   exit;
-                      $qtd =count($this->_authNamespace->carrinho[$id]["numeros"])."<br/>";
+                      
+
+                      $valor = $this->_authNamespace->carrinho[$id]["numeros"][$numero] * $this->_authNamespace->carrinho[$id]["valor"];
+                      $qtd =count($this->_authNamespace->carrinho[$id]["numeros"]);
 
                       if($qtd>1){
                         unset($this->_authNamespace->carrinho[$id]["numeros"][$numero]);                                            
@@ -162,6 +162,8 @@ class Tokem_Carrinho  {
                       if($qtd==1){
                         unset($this->_authNamespace->carrinho[$id]);                                            
                       }
+
+                      $this->verificarAtualizarCreditoUsadoAoSubtrair($valor);
                       
                       return true;
                       exit;
@@ -177,11 +179,12 @@ class Tokem_Carrinho  {
   function somarItem($id,$numero){
                     
                     $authNamespace = new Zend_Session_Namespace('Carrinho');                    
-                    $exists = array_key_exists($id, $authNamespace->carrinho);
+                    $exists = array_key_exists($id, $authNamespace->carrinho);                    
                     if($exists){
                       $qtd = 1;
                       $this->_authNamespace->carrinho[$id]["numeros"][$numero]+=$qtd;
-                      
+                      $this->verificarAtualizarCreditoUsadoAoSomar();  
+
                       return true;
                       exit;
                     }else{
@@ -198,7 +201,8 @@ class Tokem_Carrinho  {
                     if($exists){
                       $qtd = 1;
                       if($this->_authNamespace->carrinho[$id]["numeros"][$numero]>1){
-                        $this->_authNamespace->carrinho[$id]["numeros"][$numero]-=$qtd;  
+                        $this->_authNamespace->carrinho[$id]["numeros"][$numero]-=$qtd;
+                        $this->verificarAtualizarCreditoUsadoAoSubtrair($this->_authNamespace->carrinho[$id]["valor"]);    
                       }
                       
                       return true;
@@ -207,6 +211,79 @@ class Tokem_Carrinho  {
                        return false; 
                        exit; 
                     }                    
+
+  }
+
+  function verificarAtualizarCreditoUsadoAoSomar(){
+
+    $creditos = new Zend_Session_Namespace('Creditos');
+    $carrinho = new Zend_Session_Namespace('Carrinho');  
+   
+
+    if(!empty($creditos->credito)&&!empty($creditos->total)&&!empty($creditos->usado)){
+      unset($creditos->total);
+      
+      if(!empty($carrinho->carrinho)){
+        $total = null;
+        $subtotal = null;
+        foreach ($carrinho->carrinho as $key => $value){
+          foreach ($value["numeros"] as $indice => $valor){
+            $subtotal+= $valor * $value["valor"];
+                $subtotal = $valor * $value["valor"];
+                $total+= $subtotal;                              
+          }
+        }
+      }
+
+      if($total > $creditos->usado){
+        $creditos->total = $total- $creditos->usado;
+      }else{
+        $creditos->total = $creditos->usado - $total;
+      }      
+
+   }
+
+
+     return true;
+
+
+  }
+
+
+  function verificarAtualizarCreditoUsadoAoSubtrair($valor){
+
+    $creditos = new Zend_Session_Namespace('Creditos');
+    $carrinho = new Zend_Session_Namespace('Carrinho');  
+   
+
+    if($creditos->usado){
+      unset($creditos->total);
+      
+      if(!empty($carrinho->carrinho)){
+        $total = null;
+        $subtotal = null;
+        foreach ($carrinho->carrinho as $key => $value){
+          foreach ($value["numeros"] as $indice => $valor){
+            $subtotal+= $valor * $value["valor"];
+                $subtotal = $valor * $value["valor"];
+                $total+= $subtotal;                              
+          }
+        }
+      }
+
+      if($total<$creditos->usado){
+          $aux = $creditos->usado - $total." ";
+          $creditos->usado = $creditos->usado - $aux."  ";
+          $creditos->restante = $aux+$creditos->restante;
+      }
+      
+      exit;
+      
+
+   }
+
+     return true;
+
 
   }
 

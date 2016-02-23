@@ -12,14 +12,27 @@
 <?php
 	$authNamespace = new Zend_Session_Namespace('Carrinho');	
 	$carrinho = $authNamespace->carrinho;
+
 ?>
 
+<?php if(!empty($authNamespace->carrinho)):?>
+	<?php $total = null;?>
+	<?php $subtotal = null;?>
+
+	<?php foreach ($carrinho as $key => $value):?>
+		<?php foreach ($value["numeros"] as $indice => $valor):?>
+			<?php $subtotal+= $valor * $value["valor"];
+					$subtotal = $valor * $value["valor"];
+					$total+= $subtotal;
+			?>
+	<?php endforeach;?>
+	<?php endforeach;?>
+<?php endif;?>
+
+
+
+
 <style type="text/css">
-	button.btn.bg-light-blue.total_item {
-	    float: right;
-	    margin-right: 30px;
-	    margin-top: -17px;
-	}
 
 	#alert_sucesso {
     color: #ffffff!important;
@@ -32,30 +45,39 @@
 	}
 </style>
 
-
-
 <div class="boxHeader box">
-					<h1 class="pageTitle">
-						<a href="#" title="#">Onde você está!</a>
-					</h1>
-					<ol class="breadcrumb">
-						<li><a href="#" style="color: #A29F9E;"><i class="zmdi zmdi-mouse zmdi-hc-fw"></i> Escolhendo produtos</a></li>
-						<li><a href="#"><i class="zmdi zmdi-eye zmdi-hc-fw"></i> Verificando seu pedido</a></li>
-						<li><a href="#" style="color: #A29F9E;"><i class="zmdi zmdi-card zmdi-hc-fw"></i> Efetuando pagamento</a></li>
-					</ol>
+		<h1 class="pageTitle">
+			<a href="#" title="#">Onde você está!</a>
+		</h1>
+		<ol class="breadcrumb">
+			<li><a href="#" style="color: #A29F9E;"><i class="zmdi zmdi-mouse zmdi-hc-fw"></i> Escolhendo produtos</a></li>
+			<li><a href="#"><i class="zmdi zmdi-eye zmdi-hc-fw"></i> Verificando seu pedido</a></li>
+			<li><a href="#" style="color: #A29F9E;"><i class="zmdi zmdi-card zmdi-hc-fw"></i> Efetuando pagamento</a></li>
+		</ol>
 </div>
 
 <a href="<?php echo $this->baseUrl()?>/pedidos/grade">
-<button type="button" class="btn bg-purple"><i class="fa fa-cart-plus"></i>Continuar Comprando</button>
+<button type="button" class="btn bg-light-blue"><i class="fa fa-chevron-circle-left"></i>Continuar Comprando<i class="fa fa-cart-plus"></i></button>
 </a>
 
 <a href="<?php echo $this->baseUrl()?>/pedidos/carrinho/id/esvaziar">
-<button type="button" class="btn btn-primary"><i class="fa fa-trash-o"></i>Zerar Pedido</button>
+<button type="button" class="btn btn-primary">Zerar Pedido<i class="fa fa-trash-o"></i></button>
 </a>
 
-<a href="<?php echo $this->baseUrl()?>/pedidos/carrinho">
-<button type="button" class="btn bg-light-green"><i class="zmdi zmdi-refresh-sync zmdi-hc-fw"></i> Atualizar Carrinho</button>
+<form  style="display: inline;" action="<?php echo $this->baseUrl()?>/pedidos/carrinho/" method="post">
+<input type="hidden" name="atualizar" value="atualizar">
+<?php if(!empty($total)):?>
+	<input type="hidden" name="total" value="<?php echo $total?>">
+<?php endif;?>	
+<button type="submit" class="btn bg-light-green"><i class="zmdi zmdi-refresh-sync zmdi-hc-fw"></i> Atualizar Carrinho</button>
+</form>
+
+<?php if(!empty($authNamespace->carrinho)):?>
+<a href="<?php echo $this->baseUrl()?>/pedidos/pagamento">
+<button type="button"  id="botao_pagamento" class="btn bg-light-blue">Prosseguir para o pagamento<i class="fa fa-chevron-circle-right"></i></button>
 </a>
+				
+<?php endif;?>
 
 <!-- Table Striped -->
 				<div class="box rte box-without-bottom-padding">
@@ -105,7 +127,7 @@
 														$total+= $subtotal;
 												?></td>
 												<td>
-													<a  href="javascript:void(0);" numeracao="<?php echo $indice?>" idproduto="<?php echo $key?>" title="Excluir item" controller="" id="" class="remover_item_do_carrinho text-light-gray"><i class="fa fa-trash-o"></i></a>
+													<a  href="javascript:void(0);" numeracao="<?php echo $indice?>" idProdutoExcluir="<?php echo $key?>" title="Excluir item" controller="" id="" class="remover_item_do_carrinho text-light-gray"><i class="fa fa-trash-o"></i></a>
 												</td>
 											</tr>
 										<?php endforeach;?>											
@@ -131,11 +153,4 @@
 
 				</div>
 				<br/>
-				<?php if(!empty($authNamespace->carrinho)):?>
-				<a href="<?php echo $this->baseUrl()?>/pedidos/pagamento">
-				<div id="button_pagamento" style="float: right;">
-					<button type="button"  id="botao_pagamento" class="btn bg-light-blue total_item" style="margin-right: 0%">Prosseguir para o pagamento<i class="fa fa-chevron-circle-right"></i></button>
-				</div>
-				<br/>
-				<?php endif;?>
 				<!-- <button type="button" class="btn bg-light-blue total_item">TOTAL </button>				 -->

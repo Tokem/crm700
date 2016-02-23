@@ -4,6 +4,8 @@ class PedidosController extends Tokem_ControllerBase
 {
 
     protected $_usuarios = null;
+    protected $_creditos = null;
+    protected $_usarCreditos = null;
     protected $_carrinho = null;
     protected $_produtos = null;
     protected $_identity = null;
@@ -15,6 +17,8 @@ class PedidosController extends Tokem_ControllerBase
         $this->_baseUrl = $url = Zend_Controller_Front::getInstance()->getBaseUrl();        
         $this->_usuarios = new Application_Model_Usuarios();
         $this->_produtos = new Application_Model_Produto();
+        $this->_creditos = new Application_Model_Creditos();
+        $this->_usarCreditos = new Tokem_Creditos();
         $this->_carrinho  = new Tokem_Carrinho();
         $this->_dbAdapter = Zend_Db_Table::getDefaultAdapter();
 
@@ -42,12 +46,20 @@ class PedidosController extends Tokem_ControllerBase
 
     public function carrinhoAction()
     {
+        
         $this->view->titulo = "Carrinho";
         $id = $this->getRequest()->getParam('id');
-        $authNamespace = new Zend_Session_Namespace('Carrinho');    
+        $authNamespace = new Zend_Session_Namespace('Carrinho');
+        $dados = $this->getRequest()->getParams();
+        $request = $this->getRequest();        
 
-        if($id){            
+        if($id=="esvaziar"){                        
             unset($authNamespace->carrinho);
+            $authNamespace = new Zend_Session_Namespace('Creditos');    
+            unset($authNamespace->total);
+            unset($authNamespace->restante);
+            unset($authNamespace->credito);
+            unset($authNamespace->usado);
             $this->_redirect('/pedidos/carrinho');
             exit; 
         }
@@ -84,7 +96,7 @@ class PedidosController extends Tokem_ControllerBase
         $dados = $this->getRequest()->getParams();
 
         if($request->isXmlHttpRequest() && $request->isPost()){
-            $this->_carrinho->somarItem($dados["id"],$dados["numero"]);
+            $this->_carrinho->somarItem($dados["idProdutoSomar"],$dados["numero"]);
             exit;    
         }
         
@@ -94,12 +106,13 @@ class PedidosController extends Tokem_ControllerBase
 
 
     public function subtrairItemAction()
-    {
+    {   
+
         $request = $this->getRequest();        
         $dados = $this->getRequest()->getParams();
 
         if($request->isXmlHttpRequest() && $request->isPost()){
-            $this->_carrinho->subtrairItem($dados["id"],$dados["numero"]);
+            $this->_carrinho->subtrairItem($dados["idProdutoSub"],$dados["numero"]);
             exit;    
         }
         
@@ -110,9 +123,16 @@ class PedidosController extends Tokem_ControllerBase
     {
 
 
+        $authNamespace = new Zend_Session_Namespace('Carrinho');    
+        $carrinho = $authNamespace->carrinho;
+        if(empty($carrinho)){
+            $this->_redirect('/pedidos/grade');
+            exit; 
+        }
+
+
         $this->view->headLink()->appendStylesheet('/crm700/public/plugins/alertifyjs/css/alertify.min.css');
         $this->view->headScript()->appendFile($this->_baseUrl . '/plugins/alertifyjs/alertify.min.js');
-
 
         $this->view->headLink()->appendStylesheet('/crm700/public/plugins/form_validation/vendor/bootstrap/css/bootstrap.css');
         $this->view->headLink()->appendStylesheet('/crm700/public/plugins/form_validation/dist/css/formValidation.css');
@@ -129,49 +149,35 @@ class PedidosController extends Tokem_ControllerBase
         $request = $this->getRequest();        
         $dados = $this->getRequest()->getParams();
 
+        if(!empty($dados["usarcreditos"])){            
+            $this->_usarCreditos->usarCreditos($this->_identity->usr_id,$dados["valorPedido"]);
+        }
+
+        if(!empty($dados["cancelarcreditos"])){            
+            $this->_usarCreditos->cancelarCreditos();
+        }
+
         if($request->isXmlHttpRequest() && $request->isPost()){
             $this->_carrinho->somarItem($dados["id"],$dados["numero"]);
             exit;    
         }
 
-
-        $email = 'vendas@700gauss.com.br';
-        $token = '24707C512FF041ED96B762FE807CA552';
-        $url = 'https://ws.sandbox.pagseguro.uol.com.br/v2/sessions';
+            $pagseguro = new Tokem_PagSeguro();
+            $this->view->tokem = $pagseguro->generateTokem();
         
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, sprintf('email=%s&token=%s', $email, $token));
-        curl_setopt($ch, CURLOPT_TIMEOUT, 60);
-        $ret = curl_exec($ch);
-        curl_close($ch);
-        libxml_use_internal_errors(true);
-        $valid = simplexml_load_string($ret) !== false;
-
-
-        if ($valid){
-            $pagSeguro = new Zend_Session_Namespace('PagSeguro');    
-            unset($pagSeguro->tokem);
-            $pagSeguro->tokem;
-            $xml = simplexml_load_string($ret);            
-            $this->view->tokem = $xml->id;    
-        }
-        
-        //$this->view->headScript()->appendFile($this->_baseUrl . '/files_js/controllers/pagamento/pagseguro.js');
     }
 
 
     public function excluirItemAction()
     {
 
+
+
         $request = $this->getRequest();        
         $dados = $this->getRequest()->getParams();
 
         if($request->isXmlHttpRequest() && $request->isPost()){
-           $return = $this->_carrinho->excluirItem($dados["id"],$dados["numero"]);
+           $return = $this->_carrinho->excluirItem($dados["idProdutoExcluir"],$dados["numero"]);
 
            if($return){
             $flashMessenger = $this->_helper->FlashMessenger;   

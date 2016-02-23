@@ -8,7 +8,7 @@ $(function(){
 $(function(){
   $('.remover_item_do_carrinho').on('click',function(){
 
-  	var idProduto = $(this).attr("idproduto");
+  	var idProduto = $(this).attr("idProdutoExcluir");
   	var numeracaoProduto = $(this).attr("numeracao");
 
 
@@ -16,13 +16,15 @@ $(function(){
     alertify.confirm("Deseja realmente deletar este item?", function(){
 
                 $.ajax({
-                    url: "./excluir-item",
+                    url: "/crm700/public/pedidos/excluir-item",
                     type: 'post',
                     data: {
-                        id: idProduto,
+                        idProdutoExcluir: idProduto,
                         numero: numeracaoProduto,
                     }, beforeSend: function() {
-                    }, success: function(e) {                    	
+                    }, success: function(e) { 
+                        // console.log(e);
+                        // return false;                        
                         location.reload();                    
                     }, error: function(e) {
                         window.location.replace(redirect);
@@ -50,17 +52,18 @@ $(function(){
     var idProduto = $(this).attr("idprodutosoma");
     var numeracaoProduto = $(this).attr("numerosoma");
 
+
                 $.ajax({
-                    url: "./somar-item",
+                    url: "/crm700/public/pedidos/somar-item",
                     type: 'post',
                     data: {
-                        id: idProduto,
+                        idProdutoSomar: idProduto,
                         numero: numeracaoProduto,
                     }, beforeSend: function() {
                     }, success: function(e) {
+                        console.log(e);
                         var valor = parseInt($( "#quantidade_"+idProduto+"_"+numeracaoProduto).val());
                         valor +=1;
-                        console.log(numeracaoProduto);
                         $( "#quantidade_"+idProduto+"_"+numeracaoProduto).val(valor)
                         return false;
                         
@@ -87,15 +90,16 @@ $(function(){
     var numeracaoProduto = $(this).attr("numerosub");
 
                 $.ajax({
-                    url: "./subtrair-item",
+                    url: "/crm700/public/pedidos/subtrair-item",
                     type: 'post',
                     data: {
-                        id: idProduto,
+                        idProdutoSub: idProduto,
                         numero: numeracaoProduto,
                     }, beforeSend: function() {
                     }, success: function(e) {
 
-                        
+                        console.log(e);
+
                         var valor = parseInt($( "#quantidade_"+idProduto+"_"+numeracaoProduto).val());
                         if(valor>1){
                           valor -=1;  

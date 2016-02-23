@@ -25,9 +25,9 @@ class LoginController extends Tokem_ControllerBase {
         $auth = Zend_Auth::getInstance();
         $loggedIn= $auth->hasIdentity();    
 
-        if($loggedIn){
-           $this->_redirect('/pedidos/grade');
-           exit; 
+        if($loggedIn){            
+            $this->_redirect('/pedidos/grade');
+            exit; 
         }
 
         $request = $this->getRequest();
@@ -71,9 +71,17 @@ class LoginController extends Tokem_ControllerBase {
                                time() + 7200,
                                "/data/cookie");
 
+                $carrinho = new Zend_Session_Namespace('Carrinho');
+                $creditos = new Zend_Session_Namespace('Creditos');        
+                
+                unset($carrinho->carrinho);
+                unset($creditos->total);
+                unset($creditos->restante);
+                unset($creditos->credito);
+                unset($creditos->usado);
+                
 
-                $login = array("resultado"=>"1","permissao"=>"$identity->usr_permissao","ativo"=>"$identity->usr_ativo");
-
+                $login = array("resultado"=>"1","permissao"=>"$identity->usr_permissao","ativo"=>"$identity->usr_ativo");                
                 echo $status = json_encode($login);
                 exit;
 
@@ -100,7 +108,8 @@ class LoginController extends Tokem_ControllerBase {
     public function logoutAction() {
         // Apaga da instância do Zend Auth a identificação no sistema.
         Zend_Auth::getInstance()->clearIdentity();
-
+        $authNamespace = new Zend_Session_Namespace('Carrinho');    
+        unset($authNamespace->carrinho);
 
         $flashMessenger = $this->_helper->FlashMessenger;   
             $flashMessenger->addMessage('
