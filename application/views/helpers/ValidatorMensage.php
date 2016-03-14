@@ -91,8 +91,8 @@ class Zend_View_Helper_ValidatorMensage extends Zend_View_Helper_Abstract {
        			case "select_permissao":
        				$campo="Permissão";	
        				break;
-                            case "usr_id_fk_carteira":
-                                   $campo="Código do Vendedor";  
+                            case "select_vendedor":
+                                   $campo="Vendedor";  
                                    break;
                             ##Mensagens Categoria Produto##              
                             case "cat_nome":

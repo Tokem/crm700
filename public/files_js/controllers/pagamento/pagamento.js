@@ -1,9 +1,68 @@
+
+function verifyError(psresponse){
+
+
+        if(typeof psresponse.errors != "undefined"){
+            console.log(psresponse.errors);
+
+            if( typeof psresponse.errors["30400"]!= "undefined") {
+
+                $("#info").hide("fast");
+                $("#msg_error").html("");
+                $("#msg_error").html("Dados do cartão inválidos.");
+                $("#error_pag").show("fast")
+                $('html,body').animate({scrollTop: $("#topo_tab").offset().top},'slow');
+
+            }else if( typeof psresponse.errors["10001"]!= "undefined"){
+
+                $("#info").hide("fast");
+                $("#msg_error").html("");
+                $("#msg_error").html("Tamanho do cartão inválido.");
+                $("#error_pag").show("fast")
+                $('html,body').animate({scrollTop: $("#topo_tab").offset().top},'slow');
+
+            }else if( typeof psresponse.errors["10006"]!= "undefined"){
+                
+                $("#info").hide("fast");
+                $("#msg_error").html("");
+                $("#msg_error").html("Tamanho do CVV inválido.");
+                $("#error_pag").show("fast")
+                $('html,body').animate({scrollTop: $("#topo_tab").offset().top},'slow');
+
+            }else if( typeof psresponse.errors["30405"]!= "undefined"){
+                
+                $("#info").hide("fast");
+                $("#msg_error").html("");
+                $("#msg_error").html("Data de validade incorreta.");
+                $("#error_pag").show("fast")
+                $('html,body').animate({scrollTop: $("#topo_tab").offset().top},'slow');
+
+            }else if( typeof psresponse.errors["30403"]!= "undefined"){
+                updateSendHash();
+                //Se sessao expirar, atualizamos a session
+            }else{
+                
+                $("#info").hide("fast");
+                $("#msg_error").html("");
+                $("#msg_error").html("Verifique os dados do cartão digitado.");
+                $("#error_pag").show("fast")                
+
+            }                    
+            //console.log('Falha ao obter o token do cartao.');                    
+            return false;
+        }else{
+            return true;
+        }
+}
+
+
 function updateSendHash(){
 
     var TOKEM = $("#tokem").val();
     if(TOKEM!=''){
         PagSeguroDirectPayment.setSessionId(TOKEM);
-        var senderHash = PagSeguroDirectPayment.getSenderHash();            
+        var senderHash = PagSeguroDirectPayment.getSenderHash(); 
+        $("#senderHash").val(senderHash);           
     }
 
 }
@@ -61,110 +120,72 @@ function createCardToken(){
                     $("#error_pag").hide("fast")
                 },
                 error: function(psresponse){
-                    if(undefined!=psresponse.errors["30400"]) {
 
-                        $("#info").hide("fast");
-                        $("#msg_error").html("");
-                        $("#msg_error").html("Dados do cartão inválidos.");
-                        $("#error_pag").show("fast")
-
-                    }else if(undefined!=psresponse.errors["10001"]){
-
-                        $("#info").hide("fast");
-                        $("#msg_error").html("");
-                        $("#msg_error").html("Tamanho do cartão inválido.");
-                        $("#error_pag").show("fast")
-
-                    }else if(undefined!=psresponse.errors["10006"]){
-                        
-                        $("#info").hide("fast");
-                        $("#msg_error").html("");
-                        $("#msg_error").html("Tamanho do CVV inválido.");
-                        $("#error_pag").show("fast")
-
-                    }else if(undefined!=psresponse.errors["30405"]){
-                        
-                        $("#info").hide("fast");
-                        $("#msg_error").html("");
-                        $("#msg_error").html("Data de validade incorreta.");
-                        $("#error_pag").show("fast")
-
-                    }else if(undefined!=psresponse.errors["30403"]){
-                        updateSendHash();
-                        //Se sessao expirar, atualizamos a session
-                    }else{
-                        
-                        $("#info").hide("fast");
-                        $("#msg_error").html("");
-                        $("#msg_error").html("Verifique os dados do cartão digitado.");
-                        $("#error_pag").show("fast")
-
-                    }                    
-                    console.log('Falha ao obter o token do cartao.');
-                    console.log(psresponse.errors);
+                    verifyError(psresponse);
+                    //console.log(psresponse.errors);
                 },
                 complete: function(psresponse){
-                    // console.log(psresponse);
+                    //console.log(psresponse);                    
                     // console.log(psresponse.card.token);
-                    $("#TokemCard").val(psresponse.card.token)
-                    updateSendHash();
+                    if(verifyError(psresponse)){
+                        $("#TokemCard").val(psresponse.card.token)
+                        updateSendHash();    
+                    }else{
+                        $("#info").hide("fast");
+                        $("#msg_error").html("");
+                        $("#msg_error").html("Houve um erro! Verifique se digitou as informações corretamente.");
+                        $("#error_pag").show("fast")
+                        $('html,body').animate({scrollTop: $("#topo_tab").offset().top},'slow');
+                    }
+                    
                 }
     });
 }
 function getInstallments(){
   
   PagSeguroDirectPayment.getInstallments({
-  amount: $("input#valorPagto").val(),
-  brand: $("input#bandeira").val(),
-  maxInstallmentNoInterest: 2,
+  amount: $("#valorTotal").val(),
+  brand: $("#BrandCard").val(),
+  maxInstallmentNoInterest: 3,
       success: function(response) {
-          console.log("parcelamento success=" + response);
+          //console.log("parcelamento success=" + response);
+
+          $('#parcelas').find('option').remove().end()
+          
+          for( installment in response.installments) break;
+                       //console.log(response.installments);
+                       //console.log($("#BrandCard").val());
+                       var b = response.installments[$("#BrandCard").val()];
+                       //console.log(b);
+                       //parcelsDrop.length = 0;
+                       for(var x=0; x < b.length; x++){
+                           var option = document.createElement('option');
+                           option.text = b[x].quantity + "x de R$" + b[x].installmentAmount.toFixed(2).toString().replace('.',',');
+                           option.text += (b[x].interestFree)?" sem juros":" com juros";
+                           option.value = b[x].quantity + "|" + b[x].installmentAmount;
+                           
+                           //console.log(option);
+                           $("#parcelas").append(option);
+                       }
+
+                      // console.log(b[0].quantity);
+                      // console.log(b[0].installmentAmount);
       },
       error: function(response) {
-        console.log("parcelamento error=" + response);  
+        //console.log("parcelamento error=" + response);
+        $("#info").hide("fast");
+        $("#msg_error").html("");
+        $("#msg_error").html("Ocorreu um erro ao calcular o parcelamento.");
+        $("#error_pag").show("fast")
+  
       },
       complete: function(response) {
-          console.log("parcelamento complete=" + response);
+          //console.log("parcelamento complete=" + response);
       }
 
   })
 
 }
-
-// PagSeguroDirectPayment.getInstallments({
-//                    amount: grandTotal,
-//                    brand: RMPagSeguro.brand.name,
-//                    success: function(response) {
-//                        var parcelsDrop = document.getElementById('pagseguro_cc_cc_installments');
-//                        for( installment in response.installments) break;
-// //                       console.log(response.installments);
-//                        var b = response.installments[RMPagSeguro.brand.name];
-//                        parcelsDrop.length = 0;
-//                        for(var x=0; x < b.length; x++){
-//                            var option = document.createElement('option');
-//                            option.text = b[x].quantity + "x de R$" + b[x].installmentAmount.toFixed(2).toString().replace('.',',');
-//                            option.text += (b[x].interestFree)?" sem juros":" com juros";
-//                            option.value = b[x].quantity + "|" + b[x].installmentAmount;
-//                            parcelsDrop.add(option);
-//                        }
-// //                       console.log(b[0].quantity);
-// //                       console.log(b[0].installmentAmount);
-
-//                    },
-//                    error: function(response) {
-//                        console.log(response);
-//                    },
-//                    complete: function(response) {
-// //                       console.log(response);
-//                        RMPagSeguro.reCheckSenderHash();
-//                    }
-//                });
-//            },
-//             onFailure: function(response){
-//                 return 0;
-//             }
-//         });
-
 
 $(document).ready(function() {
 
@@ -258,7 +279,25 @@ $('#form_cartao').formValidation({
                     }
 
                 }
-            },                        
+            },
+
+            parcelas: {
+                validators: {
+                    notEmpty: {
+                        message: 'Parcelas obrigatório!'
+                    },
+                }
+            },
+
+            select_revendedor: {
+                validators: {
+                    notEmpty: {
+                        message: 'Revendedor obrigatório!'
+                    },
+                }
+            },
+
+                        
         }
     });
 }).on('success.form.fv', function(e) {
@@ -271,14 +310,55 @@ $('#form_cartao').formValidation({
 
             $("#botao_pagamento").addClass("disabled");            
             
+            var orderValue = $("#valorTotal").val();
             var cardNumber = $("#numero_cartao").val();
             var cvv = $("#codigo_seguranca").val();
             var expirationMonth = $("#mes_validade").val();
             var expirationYear = $("#ano_validade").val();
+            var tokem = $("#tokem").val();
+            var creditCardToken = $("#TokemCard").val();
+            var installmentQuantity = $("#parcelas").val();
+            var installmentValue = null;
+            var creditCardHolderName = $("#nome_cartao").val();
+            var creditCardHolderCPF =$("#cpf").val();
+            var creditCardHolderBirthDate = $("#dia_aniversario").val() + "/"+ $("#mes_aniversario").val()+"/"+$("#ano_aniversario").val();
+
+            if($('#select_revendedor').length>0){var orderInName = $('#select_revendedor').val();
+            }else{ var orderInName = null }
 
             updateSendHash();
-                    
+
+            var hash = $("#senderHash").val();
+
+            $.ajax({
+                    url: "/crm700/public/pedidos/ordem-de-pagamento",
+                    type: 'post',
+                    data: {
+                        orderInName: orderInName,
+                        orderValue:orderValue,
+                        cardNumber:cardNumber, 
+                        cvv:cvv,
+                        expirationMonth:expirationMonth,
+                        expirationYear:expirationYear,
+                        tokem:tokem, 
+                        creditCardToken:creditCardToken,
+                        installmentQuantity:installmentQuantity, 
+                        creditCardHolderName:creditCardHolderName,
+                        creditCardHolderCPF:creditCardHolderCPF,
+                        creditCardHolderBirthDate:creditCardHolderBirthDate,
+                        senderHash:hash,
+                    }, beforeSend: function() {
+                    }, success: function(e) { 
+                        // console.log(e);
+                        // return false;
+                        window.location.replace("/crm700/public/pedidos/");
+                    }, error: function(e) {
+                        window.location.replace("/crm700/public/pedidos/");
+                    }
+            })
+
             return false;
+                    
 
 });
 
@@ -297,7 +377,8 @@ $("#numero_cartao").focusout(function(){
 
 $("#codigo_seguranca").focusout(function(){
     updateSendHash();
-    createCardToken();    
+    createCardToken();
+    getInstallments();    
 })
 
 

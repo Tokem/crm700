@@ -212,6 +212,9 @@ class UsuariosController extends Tokem_ControllerBase
         $request = $this->getRequest();
         $dados = $this->getRequest()->getParams();
 
+
+        
+
         $vendedores = $this->_usuarios->fetchAll("usr_permissao = 'vendedor'","usr_id DESC");
         $this->view->lista = $vendedores;
 
@@ -249,7 +252,7 @@ class UsuariosController extends Tokem_ControllerBase
                     $agregado = @$dados["usr_id_fk_agregado"];
                     $permissao  = "revendedor";
                     $senha = null;
-                    $carteira = $dados["usr_id_fk_carteira"];
+                    $carteira = $dados["select_vendedor"];
                     break;
                 case "vendedor":
                     $carteira = $this->_identity->usr_id;
@@ -261,7 +264,7 @@ class UsuariosController extends Tokem_ControllerBase
                     $agregado = @$dados["usr_id_fk_agregado"];
                     $permissao  = @$dados["select_permissao"];
                     $senha = @$dados["usr_senha"];
-                    $carteira = @$dados["usr_id_fk_carteira"];
+                    $carteira = @$dados["select_vendedor"];
                     break;           
                 
             }
@@ -364,12 +367,12 @@ class UsuariosController extends Tokem_ControllerBase
     
 
                          try {
-                                if(isset($dados["usr_id_fk_carteira"])&&$dados["usr_id_fk_carteira"]!=0 ){
+                                if(isset($dados["select_vendedor"])&&$dados["select_vendedor"]!=0 ){
 
                                     $notificacao = array("not_tipo"=>"MSG Sistema",
                                         "not_mensagem"=>"Você recebeu um novo cadastro",
                                         "not_link"=>$this->_baseUrl."/usuarios/ver/id/".$lastInsert,
-                                        "usr_id_fk"=>$dados["usr_id_fk_carteira"],
+                                        "usr_id_fk"=>$dados["select_vendedor"],
                                         "not_usr_nome"=>$dados["usr_nome"],
                                         "not_permissao"=>$dados["select_permissao"]);
 
@@ -418,6 +421,7 @@ class UsuariosController extends Tokem_ControllerBase
             @$this->view->estado = $dados["select_estado"];
             @$this->view->permissao =  $dados["select_permissao"];
             @$this->view->pergunta =  $dados["select_pergunta"];
+            @$this->view->vendedor =  $dados["select_vendedor"];
             
         }
         
@@ -455,9 +459,21 @@ class UsuariosController extends Tokem_ControllerBase
                 break;
         }
 
+
         $form->setAction($this->_helper->url('editar'));
         $request = $this->getRequest();
         $dados = $this->getRequest()->getParams();
+
+        if(isset($dados["select_permissao"])){
+            $this->_permissaoUsuario = $dados["select_permissao"];
+        }else{
+            $this->_permissaoUsuario = "revendedor";
+        }
+
+        if(@$this->_permissaoUsuario=="vendedor" || @$this->_permissaoUsuario=="administrador" ){
+                $ignorar = new Tokem_Ignore();
+                $ignorar->ignore($form);
+        }
 
         $id = $this->getRequest()->getParam('id');
         $dados = $this->getRequest()->getParams();
@@ -524,8 +540,8 @@ class UsuariosController extends Tokem_ControllerBase
         $form->populate($usuarioForm);
         $request = $this->getRequest();
 
-         if(isset($dados["usr_id_fk_carteira"])){
-                $carteira = $dados["usr_id_fk_carteira"];
+         if(isset($dados["select_vendedor"])){
+                $carteira = $dados["select_vendedor"];
                 $form->getElement('usr_id_fk_carteira')->setValue($carteira);
          }
          // else{
@@ -558,7 +574,7 @@ class UsuariosController extends Tokem_ControllerBase
                     $agregado = @$dados["usr_id_fk_agregado"];
                     $permissao  = "revendedor";
                     $senha = null;
-                    $carteira = $dados["usr_id_fk_carteira"];
+                    $carteira = $dados["select_vendedor"];
                     break;
                 case "vendedor":
                     $carteira = $this->_identity->usr_id;
@@ -570,7 +586,7 @@ class UsuariosController extends Tokem_ControllerBase
                     $agregado = @$dados["usr_id_fk_agregado"];
                     $permissao  = @$dados["select_permissao"];
                     $senha = @$dados["usr_senha"];
-                    $carteira = @$dados["usr_id_fk_carteira"];
+                    $carteira = @$dados["select_vendedor"];
                     break;           
                 
                 }
@@ -657,12 +673,12 @@ class UsuariosController extends Tokem_ControllerBase
             try {
                                     
 
-                            if(isset($dados["usr_id_fk_carteira"])&&$dados["usr_id_fk_carteira"]!=0){
+                            if(isset($dados["select_vendedor"])&&$dados["select_vendedor"]!=0){
 
                                 $notificacao = array("not_tipo"=>"MSG Sistema",
                                     "not_mensagem"=>"Você recebeu um novo cadastro",
                                     "not_link"=>$this->_baseUrl."/usuarios/ver/id/".$usuario->usr_id,
-                                    "usr_id_fk"=>$dados["usr_id_fk_carteira"],
+                                    "usr_id_fk"=>$dados["select_vendedor"],
                                     "not_usr_nome"=>$dados["usr_nome"],
                                     "not_permissao"=>$dados["select_permissao"]);
 
@@ -810,7 +826,7 @@ class UsuariosController extends Tokem_ControllerBase
 
     
         $dados = $this->getRequest()->getParams();
-        $id = $dados["usr_id_fk_carteira"];
+        $id = $dados["select_vendedor"];
         $vendedor = $this->_usuarios->fetchRow("usr_id='$id'");
         
         if(isset($vendedor->usr_id) && $vendedor->usr_permissao=="vendedor"){

@@ -255,7 +255,6 @@ class Tokem_Carrinho  {
     $creditos = new Zend_Session_Namespace('Creditos');
     $carrinho = new Zend_Session_Namespace('Carrinho');  
    
-
     if($creditos->usado){
       unset($creditos->total);
       

@@ -10,6 +10,7 @@ class Tokem_Access
         $acl->addRole(new Zend_Acl_Role('administrador'));   
         $acl->addRole(new Zend_Acl_Role('revendedor'));
         $acl->addRole(new Zend_Acl_Role('vendedor'));   
+        $acl->addRole(new Zend_Acl_Role('operador'));   
         $acl->addRole(new Zend_Acl_Role('usuario'));   
         
         

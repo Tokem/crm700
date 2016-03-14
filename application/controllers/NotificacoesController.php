@@ -116,6 +116,19 @@ class NotificacoesController extends Tokem_ControllerBase
     }
 
 
+
+    public function pagseguroAction(){
+
+        $this->_notificacao = new Tokem_PagSeguro();        
+        $this->_notificacao->getNotificationStatus();
+        exit;
+
+
+    }
+
+
+
+
 }
 
 

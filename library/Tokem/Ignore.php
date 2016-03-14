@@ -23,7 +23,7 @@ class Tokem_Ignore
         $form->getElement('end_cep')->setRequired(false);
         $form->getElement('end_numero')->setRequired(false);
         $form->getElement('end_complemento')->setRequired(false);
-        $form->getElement('usr_id_fk_carteira')->setRequired(false);
+        $form->getElement('select_vendedor')->setRequired(false);
     
     }
     

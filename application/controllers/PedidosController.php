@@ -8,6 +8,9 @@ class PedidosController extends Tokem_ControllerBase
     protected $_usarCreditos = null;
     protected $_carrinho = null;
     protected $_produtos = null;
+    protected $_pedido = null;
+    protected $_itens = null;
+    protected $_pagSeguro = null;
     protected $_identity = null;
 
     public function init()
@@ -33,13 +36,167 @@ class PedidosController extends Tokem_ControllerBase
     }
 
     public function indexAction()
-    {
-        $this->view->titulo = "Pedidos";
+    {   
+
+        $this->_pedido = new Application_Model_Pedidos();
+
+        switch ($this->_identity->usr_permissao) {
+            case 'vendedor':
+                $lista = $this->_pedido->getAllBySalesman($this->_identity->usr_id);
+                break;
+            case 'revendedor':
+                $lista = $this->_pedido->getAllByAggregate($this->_identity->usr_id);
+                break;    
+                $lista = $this->_pedido->getAll();
+            default:
+                break;
+        }
+
+
+        $paginator = Zend_Paginator::factory($lista);
+        $paginator->setCurrentPageNumber($this->_getParam('page'));
+        $paginator->setItemCountPerPage(100);
+
+        Zend_Paginator::setDefaultScrollingStyle('Sliding');
+        Zend_View_Helper_PaginationControl::setDefaultViewPartial('pagination.phtml');
+
+        $this->view->lista = $paginator;
+        $this->view->paginator = $paginator;
+        
     }
 
 
-    public function testeAction(){        
+    public function ordemDePagamentoAction(){        
 
+
+        $this->_pedido = new Application_Model_Pedidos();
+        $this->_itens = new Application_Model_Itens();
+        $dados = $this->getRequest()->getParams();
+        $request = $this->getRequest();        
+
+        if($request->isXmlHttpRequest() && $request->isPost()){
+
+
+            
+            if(!is_null($dados["orderInName"])){
+                $orderInName = $dados["orderInName"];
+            }else{
+                $orderInName = $this->_identity->usr_id;
+            }
+
+                    $creditos = new Zend_Session_Namespace('Creditos');
+                    
+                    if(!empty($creditos->usado) && isset($creditos->usado)){
+                        $valorCredito = $creditos->usado;
+                    }else{
+                        $valorCredito = null;
+                    }
+                    
+                    $valorDoPedido = $dados["orderValue"];
+                    $pedido = array(
+                        "ped_valor"=>$valorDoPedido,
+                        "ped_status"=>"pedidio-realizado",
+                        "usr_id_fk"=>$orderInName,
+                        "ped_creditos_usados"=> $valorCredito,
+                    );
+            
+                    try {
+
+                     /**
+                       Inserir Pedido 
+                    **/   
+                     $lastId = $this->_pedido->insert($pedido);
+                     $authNamespace = new Zend_Session_Namespace('Carrinho');   
+                     $carrinho = $authNamespace->carrinho;
+
+                         if(!empty($carrinho)){
+                            foreach ($carrinho as $key => $value){
+                                foreach ($value["numeros"] as $indice => $valor){
+                                    $item = array(
+                                        "iten_valor"=>$value["valor"],
+                                        "iten_numeracao"=>$indice,
+                                        "iten_qtd"=>$valor,
+                                        "ped_id_fk"=>$lastId,
+                                        "pro_id_fk"=>$key,
+                                        );
+                        /**
+                           Inserir Item 
+                        **/
+                                    $this->_itens->insert($item);
+
+                                }
+                            }     
+                         }
+
+                    } catch (Zend_Db_Exception $e) {
+                        $message  = $e->getMessage();                
+                        $stream = @fopen('../log/log.log', 'a', false);
+                        $writer = new Zend_Log_Writer_Stream($stream);
+                        $logger = new Zend_Log($writer);
+                        $logger->err("$message");
+                        exit;
+                    }
+
+                    $pagamento = new Tokem_PagSeguro();
+                    unset($dados["controller"]);
+                    unset($dados["action"]);
+                    unset($dados["module"]);
+                    
+                    $xml = $pagamento->processOrder($dados,$lastId);
+                    $aux = json_encode($xml);
+                    $xml = json_decode($aux);
+
+
+
+                    if(isset($xml->paymentLink)){
+                        $link = $xml->paymentLink;
+                    }else{
+                        $link = null;
+                    }
+
+                    
+
+                    if(isset($xml->code)){
+                        $this->_pagSeguro = new Application_Model_PagSeguro();
+                        $pagseguro=array(
+                            "lastEventDate"=>$xml->lastEventDate,
+                            "code"=>$xml->code,
+                            "reference"=>$xml->reference,
+                            "type"=>$xml->type,
+                            "status"=>$xml->status,
+                            "paymentMethod_type"=>$xml->paymentMethod->type,
+                            "paymentMethod_code"=>$xml->paymentMethod->code,
+                            "paymentLink"=>$link,
+                            "grossAmount"=>$xml->grossAmount,
+                            "installmentCount"=>$xml->installmentCount,                            
+                            "ped_id_fk"=>$xml->reference,
+                        );
+
+                        try {
+                            $lastId = $this->_pagSeguro->insert($pagseguro);
+                            $pagseguro = $this->_pagSeguro->fetchRow("pag_id='$lastId'");
+                            $fk = $pagseguro->reference;
+                            $pedido = $this->_pedido->fetchRow("ped_id='$fk'");
+                            $pedido->pag_seg_id_fk = $pagseguro->pag_id;
+                            $pedido->save();
+
+                        } catch (Zend_Db_Exception $e) {
+                            $messenger = Zend_Controller_Action_HelperBroker::getStaticHelper('flashMessenger');
+                            $messenger->addMessage('<div class="alert alert-danger alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <strong>ERRO</strong> - Ocorreu um erro inesperado! ao tentar processar seu pagamento emtre em contato conosco!
+                            </div>');
+                        }
+                        
+                    }
+
+                    // $retorno = array("resultado"=>"1","url"=>"pedidos");                
+                    // echo $status = json_encode($retorno);
+
+                    exit; 
+
+
+        }
         
     }
 
@@ -122,7 +279,7 @@ class PedidosController extends Tokem_ControllerBase
     public function pagamentoAction()
     {
 
-
+        
         $authNamespace = new Zend_Session_Namespace('Carrinho');    
         $carrinho = $authNamespace->carrinho;
         if(empty($carrinho)){
@@ -164,6 +321,14 @@ class PedidosController extends Tokem_ControllerBase
 
             $pagseguro = new Tokem_PagSeguro();
             $this->view->tokem = $pagseguro->generateTokem();
+
+            if($this->_identity->usr_permissao=="vendedor"){
+                $idUser = $this->_identity->usr_id;
+                $this->view->carteira = $this->_usuarios->fetchAll("usr_id_fk_carteira='$idUser'","usr_nome ASC");    
+            }
+
+            
+            
         
     }
 

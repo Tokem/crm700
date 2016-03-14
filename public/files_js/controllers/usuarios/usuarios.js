@@ -96,14 +96,24 @@ $("#select_permissao option").each(function(){
          
 });
 
+$("#select_vendedor option").each(function(){
+
+      if($(this).val() == "" && $(this).html() == ""){
+        $(this).remove();
+      }
+         
+});
+
 $(function(){
 	var pergunta = $("#pergunta").val();
 	var estado = $("#estado").val();
 	var permissao = $("#permissao").val();
+    var vendedor = $("#vendedor").val();
 
 	$("#select_pergunta").val(pergunta);
 	$("#select_estado").val(estado);
 	$("#select_permissao").val(permissao);
+    $("#select_vendedor").val(vendedor);
 })
 
 if($("#usr_senha").length>0){

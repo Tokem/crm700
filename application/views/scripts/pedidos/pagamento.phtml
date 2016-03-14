@@ -7,7 +7,6 @@
 	$authNamespace = new Zend_Session_Namespace('Carrinho');	
 	$carrinho = $authNamespace->carrinho;
 	$Credito = new Zend_Session_Namespace('Creditos');
-
 ?>
 
 <?php $itens = null;?>
@@ -163,6 +162,7 @@ form#formCreditos {
 									<form  id="form_cartao" role="form" enctype="application/x-www-form-urlencoded"  method="post">
 										
 										<input type="hidden" name="valorTotal" id="valorTotal" value="<?php echo $valorFinal ?>"/>	
+										<input type="hidden" name="senderHash" id="senderHash" value=""/>
 										<input type="hidden" name="tokem" id="tokem" value="<?php echo $this->tokem ?>"/>
 										
 										<div class="form-group">
@@ -179,7 +179,20 @@ form#formCreditos {
 										</div>
 										
 
-										</div>	
+										</div>
+
+										<div class="form-group">
+											<?php if($this->carteira):?>
+												<label for="select_revendedor">Pedir no Nome do Revendedor</label>
+												<select class=" form-control js-select" id="select_revendedor" name="select_revendedor">
+															<option></option>
+															<?php foreach ($this->carteira as $key => $value):?>
+																<option value="<?php echo $value->usr_id ?>">- <?php echo $value->usr_nome ?> -</option>
+															<?php endforeach;?>
+												</select>
+											<?php endif;?>
+										</div>
+
 										<div class="form-group">
 											<label for="nome_cartao">Nome do dono do cartão</label>
 											<input type="text" class="form-control" id="nome_cartao" name="nome_cartao" placeholder="Escreva como está no cartão">
@@ -202,9 +215,19 @@ form#formCreditos {
 													<label for="mes_aniversario"></label>
 													<select class=" form-control js-select" id="mes_aniversario" name="mes_aniversario">
 														<option disabled selected>- Mês -</option>
-														<?php for ($i=1;$i<=12;$i++):?>
-															<option value="<?php echo $i?>"><?php echo $i?></option>
-														<?php endfor;?>
+														<option value="01">1</option>
+														<option value="02">2</option>
+														<option value="03">3</option>
+														<option value="04">4</option>
+														<option value="05">5</option>
+														<option value="06">6</option>
+														<option value="07">7</option>
+														<option value="08">8</option>
+														<option value="09">9</option>
+														<option value="10">10</option>
+														<option value="11">11</option>
+														<option value="12">12</option>
+
 													</select>
 												</div>
 											</div>

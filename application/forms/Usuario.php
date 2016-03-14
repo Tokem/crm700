@@ -3,9 +3,16 @@
 class Application_Form_Usuario extends Zend_Form
 {
 
+
+    protected $_vendedor= null;
+
     public function init()
     {
          /*validadores*/
+
+
+         $this->_vendedor = new Application_Model_Usuarios();
+         
         $validarTamanho = new Zend_Validate_StringLength(1,100);
         $validarEmail = new Zend_Validate_EmailAddress();
         
@@ -17,6 +24,7 @@ class Application_Form_Usuario extends Zend_Form
         $customDecorateSelectVende = new Tokem_CustomDecoratorSelectVende;
         $customDecorateSelectEstado = new Tokem_CustomDecoratorSelectEstado;
         $customDecorateSelectPermissao = new Tokem_CustomDecoratorSelectPermissao;
+        $customDecorateSelectVendedor = new Tokem_CustomDecoratorSelectVendedor;
         $customDecorateButton= new Tokem_CustomDecoratorButton;
 
 
@@ -185,33 +193,33 @@ class Application_Form_Usuario extends Zend_Form
             'multiOptions' => 
             array(
              ""=>"Selecione o estado",
-             "Acre"=>"Acre",
-             "Alagoas"=>"Alagoas", 
-             "Amazonas"=>"Amazonas", 
-             "Amapá"=>"Amapá",
-             "Bahia"=>"Bahia",
-             "Ceará"=>"Ceará",
-             "Distrito Federal"=>"Distrito Federal",
-             "Espírito Santo"=>"Espírito Santo",
-             "Goiás"=>"Goiás",
-             "Maranhão"=>"Maranhão",
-             "Mato Grosso"=>"Mato Grosso",
-             "Mato Grosso do Sul"=>"Mato Grosso do Sul",
-             "Minas Gerais"=>"Minas Gerais",
-             "Pará"=>"Pará",
-             "Paraíba"=>"Paraíba",
-             "Paraná"=>"Paraná",
-             "Pernambuco"=>"Pernambuco",
-             "Piauí"=>"Piauí",
-             "Rio de Janeiro"=>"Rio de Janeiro",
-             "Rio Grande do Norte"=>"Rio Grande do Norte",
-             "Rondônia"=>"Rondônia",
-             "Rio Grande do Sul"=>"Rio Grande do Sul",
-             "Roraima"=>"Roraima",
-             "Santa Catarina"=>"Santa Catarina",
-             "Sergipe"=>"Sergipe",
-             "São Paulo"=>"São Paulo",
-             "Tocantins"=>"Tocantins"),
+             "AC"=>"Acre",
+             "AL"=>"Alagoas", 
+             "AM"=>"Amazonas", 
+             "AP"=>"Amapá",
+             "BA"=>"Bahia",
+             "CE"=>"Ceará",
+             "DF"=>"Distrito Federal",
+             "ES"=>"Espírito Santo",
+             "G"=>"Goiás",
+             "MA"=>"Maranhão",
+             "MT"=>"Mato Grosso",
+             "MS"=>"Mato Grosso do Sul",
+             "MG"=>"Minas Gerais",
+             "PR"=>"Pará",
+             "PB"=>"Paraíba",
+             "PR"=>"Paraná",
+             "PE"=>"Pernambuco",
+             "PI"=>"Piauí",
+             "RJ"=>"Rio de Janeiro",
+             "RN"=>"Rio Grande do Norte",
+             "RO"=>"Rondônia",
+             "RS"=>"Rio Grande do Sul",
+             "RO"=>"Roraima",
+             "SC"=>"Santa Catarina",
+             "SE"=>"Sergipe",
+             "SP"=>"São Paulo",
+             "TO"=>"Tocantins"),
             'decorators' => array($customDecorateSelectEstado)
         ));
 
@@ -225,7 +233,7 @@ class Application_Form_Usuario extends Zend_Form
 
         $complemento = new Zend_Form_Element_Text('end_complemento');
         $complemento->setLabel('Complemento:')
-             ->setRequired(true)
+             ->setRequired(false)
              ->addFilter($stripTags)
              ->addFilter($trim)
              ->addValidator($validarTamanho)
@@ -242,12 +250,31 @@ class Application_Form_Usuario extends Zend_Form
                     $complemento,
                     ), 'Endereço', array('legend'=>'Endereço'));                      
 
-        $vendedor = new Zend_Form_Element_Text('usr_id_fk_carteira');
-        $vendedor->setLabel('Vendedor:(código)')
-             ->setRequired(true)
-             ->addFilter($stripTags)
-             ->addFilter($trim)
-             ->setDecorators(array($customDecorateInput));    
+        // $vendedor = new Zend_Form_Element_Text('usr_id_fk_carteira');
+        // $vendedor->setLabel('Vendedor:(código)')
+        //      ->setRequired(true)
+        //      ->addFilter($stripTags)
+        //      ->addFilter($trim)
+        //      ->setDecorators(array($customDecorateInput));
+
+
+
+        $vendedor = $this->createElement('select', 'select_vendedor', array(
+            'label' => 'Vendedor',
+            'elemName'=>'usr_id_fk_carteira',
+            'required' => true,'class'=>'form-control',
+        ));   
+
+
+
+        // var_dump($this->_categoria->fetchAll());
+        // exit;
+
+        foreach ($this->_vendedor->fetchAll("usr_permissao='vendedor'","usr_id DESC") as $row) {
+            $vendedor->addMultiOption($row['usr_id'], $row['usr_nome']);
+        }
+        
+        $vendedor->setDecorators(array($customDecorateSelectVendedor));         
 
         if($identity->usr_permissao!="revendedor"){
 
